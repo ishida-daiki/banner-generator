@@ -5,6 +5,7 @@ import {
   CreateCircleHandler,
   CreateRectanglesHandler,
   CreateRadialHandler,
+  PreviewCircleHandler,
 } from "./types";
 
 function hexToRgb(hex: string) {
@@ -18,6 +19,9 @@ export default function () {
   // プレビュー用の要素を保持する変数
   let previewCircle: EllipseNode | null = null;
   let previewGroup: GroupNode | null = null;
+  // 初期位置を保持する変数
+  let initialCenterX: number | null = null;
+  let initialCenterY: number | null = null;
 
   // プレビュー用の円を作成する関数
   function createPreviewCircle(options: {
@@ -53,13 +57,16 @@ export default function () {
       previewGroup.remove();
     }
 
-    const centerX = figma.viewport.center.x;
-    const centerY = figma.viewport.center.y;
+    // 初期位置が未設定の場合のみ、現在のビューポートの中心を使用
+    if (initialCenterX === null || initialCenterY === null) {
+      initialCenterX = figma.viewport.center.x;
+      initialCenterY = figma.viewport.center.y;
+    }
 
     const circles = [];
     const circle = figma.createEllipse();
-    circle.x = centerX - radius;
-    circle.y = centerY - radius;
+    circle.x = initialCenterX - radius;
+    circle.y = initialCenterY - radius;
     circle.resize(radius * 2, radius * 2);
     circle.strokeWeight = strokeWidth;
     circle.strokeCap = strokeCap;
@@ -100,6 +107,9 @@ export default function () {
   function addToFigma() {
     if (previewGroup) {
       previewGroup.name = "円";
+      // 位置をリセット
+      initialCenterX = null;
+      initialCenterY = null;
       previewGroup = null;
       previewCircle = null;
     }
@@ -125,23 +135,28 @@ export default function () {
 
   on<CreateCircleHandler>("CREATE_CIRCLE", function (options) {
     createPreviewCircle(options);
+    addToFigma();
+  });
+
+  on<PreviewCircleHandler>("PREVIEW_CIRCLE", function (options) {
+    createPreviewCircle(options);
   });
 
   on<CreateRadialHandler>("CREATE_RADIAL", function (options) {
     const { count, length, width } = options;
-    const centerX = figma.viewport.center.x;
-    const centerY = figma.viewport.center.y;
+    // const centerX = figma.viewport.center.x;
+    // const centerY = figma.viewport.center.y;
     const angleStep = (2 * Math.PI) / count;
 
     const lines = [];
     for (let i = 0; i < count; i++) {
       const angle = i * angleStep;
-      const endX = centerX + length * Math.cos(angle);
-      const endY = centerY + length * Math.sin(angle);
+      // const endX = centerX + length * Math.cos(angle);
+      // const endY = centerY + length * Math.sin(angle);
 
       const line = figma.createLine();
-      line.x = centerX;
-      line.y = centerY;
+      // line.x = centerX;
+      // line.y = centerY;
       line.resize(length, 0);
       line.rotation = (angle * 180) / Math.PI;
       line.strokeWeight = width;

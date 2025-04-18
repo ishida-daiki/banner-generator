@@ -43,3 +43,23 @@ export interface AddToFigmaHandler extends EventHandler {
   name: "ADD_TO_FIGMA";
   handler: () => void;
 }
+
+export interface PreviewCircleHandler extends EventHandler {
+  name: "PREVIEW_CIRCLE";
+  handler: (options: {
+    radius: number;
+    strokeWidth: number;
+    strokeCap:
+      | "NONE"
+      | "ROUND"
+      | "SQUARE"
+      | "ARROW_LINES"
+      | "ARROW_EQUILATERAL";
+    strokeJoin: "ROUND" | "MITER" | "BEVEL";
+    dashPattern: number[];
+    fillColor: string;
+    fillOpacity: number;
+    strokeColor: string;
+    strokeOpacity: number;
+  }) => void;
+}

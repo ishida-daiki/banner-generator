@@ -19,7 +19,6 @@ export default function () {
     }
     figma.currentPage.selection = nodes;
     figma.viewport.scrollAndZoomIntoView(nodes);
-    figma.closePlugin();
   });
   once<CloseHandler>("CLOSE", function () {
     figma.closePlugin();

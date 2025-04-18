@@ -19,6 +19,10 @@ export interface CreateCircleHandler extends EventHandler {
       | "ARROW_EQUILATERAL";
     strokeJoin: "MITER" | "BEVEL" | "ROUND";
     dashPattern: number[];
+    fillColor: string;
+    fillOpacity: number;
+    strokeColor: string;
+    strokeOpacity: number;
   }) => void;
 }
 

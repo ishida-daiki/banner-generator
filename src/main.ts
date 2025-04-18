@@ -7,6 +7,13 @@ import {
   CreateRadialHandler,
 } from "./types";
 
+function hexToRgb(hex: string) {
+  const r = parseInt(hex.slice(0, 2), 16) / 255;
+  const g = parseInt(hex.slice(2, 4), 16) / 255;
+  const b = parseInt(hex.slice(4, 6), 16) / 255;
+  return { r, g, b };
+}
+
 export default function () {
   once<CreateRectanglesHandler>("CREATE_RECTANGLES", function (count: number) {
     const nodes: Array<SceneNode> = [];
@@ -25,42 +32,58 @@ export default function () {
     figma.currentPage.selection = nodes;
     figma.viewport.scrollAndZoomIntoView(nodes);
   });
-  once<CreateCircleHandler>("CREATE_CIRCLE", function (options) {
-    const { count, radius, strokeWidth, strokeCap, strokeJoin, dashPattern } =
-      options;
+  on<CreateCircleHandler>("CREATE_CIRCLE", function (options) {
+    const {
+      count,
+      radius,
+      strokeWidth,
+      strokeCap,
+      strokeJoin,
+      dashPattern,
+      fillColor,
+      fillOpacity,
+      strokeColor,
+      strokeOpacity,
+    } = options;
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
     const circles = [];
     const circle = figma.createEllipse();
-    circle.x = centerX - radius;
-    circle.y = centerY - radius;
-    circle.resize(radius * 2, radius * 2);
-    circle.strokeWeight = strokeWidth;
-    circle.strokeCap = strokeCap;
-    circle.strokeJoin = strokeJoin;
-    circle.dashPattern = dashPattern;
-    circle.strokes = [{ type: "SOLID", color: { r: 1, g: 0, b: 1 } }];
-    circle.fills = [{ type: 'SOLID', color: { r: 1, g: 0.8, b: 1 }, opacity: 1 }];
-    circles.push(circle);
-    // for (let i = 0; i < count; i++) {
-    //   const circle = figma.createEllipse();
-    //   circle.x = centerX - radius;
-    //   circle.y = centerY - radius;
-    //   circle.resize(radius * 2, radius * 2);
-    //   circle.strokeWeight = strokeWidth;
-    //   circle.strokeCap = strokeCap;
-    //   circle.strokeJoin = strokeJoin;
-    //   circle.dashPattern = dashPattern;
-    //   circle.strokes = [{ type: 'SOLID', color: { r: 1, g: 0, b: 1 } }];
-    //   circle.fills = [];
-    //   circles.push(circle);
-    // }
+      circle.x = centerX - radius;
+      circle.y = centerY - radius;
+      circle.resize(radius * 2, radius * 2);
+      circle.strokeWeight = strokeWidth;
+      circle.strokeCap = strokeCap;
+      circle.strokeJoin = strokeJoin;
+      circle.dashPattern = dashPattern;
 
-    // const group = figma.group(circles, figma.currentPage);
-    // group.name = "円";
-    // figma.currentPage.selection = [group];
-    // figma.viewport.scrollAndZoomIntoView([group]);
+      // 線の色を設定
+      const strokeRgb = hexToRgb(strokeColor);
+      circle.strokes = [
+        {
+          type: "SOLID",
+          color: strokeRgb,
+          opacity: strokeOpacity / 100,
+        },
+      ];
+
+      // 背景色を設定
+      const fillRgb = hexToRgb(fillColor);
+      circle.fills = [
+        {
+          type: "SOLID",
+          color: fillRgb,
+          opacity: fillOpacity / 100,
+        },
+      ];
+
+      circles.push(circle);
+
+    const group = figma.group(circles, figma.currentPage);
+    group.name = "円";
+    figma.currentPage.selection = [group];
+    figma.viewport.scrollAndZoomIntoView([group]);
   });
   on<CreateRadialHandler>("CREATE_RADIAL", function (options) {
     const { count, length, width } = options;
@@ -94,7 +117,7 @@ export default function () {
     figma.closePlugin();
   });
   showUI({
-    height: 300,
+    height: 500,
     width: 240,
   });
 }

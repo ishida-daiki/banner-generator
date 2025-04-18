@@ -10,6 +10,7 @@ import {
   Dropdown,
   DropdownOption,
   RangeSlider,
+  TextboxColor,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -39,6 +40,11 @@ function Plugin() {
   const minimum = 0;
   const maximum = 500;
 
+  const [fillColor, setFillColor] = useState<string>("FF99FF");
+  const [fillOpacity, setFillOpacity] = useState<string>("50");
+  const [strokeColor, setStrokeColor] = useState<string>("FF00FF");
+  const [strokeOpacity, setStrokeOpacity] = useState<string>("100");
+
   function handleDashLengthInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
     setDashLength(newValue);
@@ -47,6 +53,28 @@ function Plugin() {
   function handleDashGapInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
     setDashGap(newValue);
+  }
+
+  function handleFillColorInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
+    setFillColor(event.currentTarget.value);
+  }
+
+  function handleFillOpacityInput(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    setFillOpacity(event.currentTarget.value);
+  }
+
+  function handleStrokeColorInput(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    setStrokeColor(event.currentTarget.value);
+  }
+
+  function handleStrokeOpacityInput(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    setStrokeOpacity(event.currentTarget.value);
   }
 
   const handleCreateButtonClick = useCallback(
@@ -59,10 +87,26 @@ function Plugin() {
           strokeCap,
           strokeJoin,
           dashPattern: [Number(dashLength), Number(dashGap)],
+          fillColor,
+          fillOpacity: Number(fillOpacity),
+          strokeColor,
+          strokeOpacity: Number(strokeOpacity),
         });
       }
     },
-    [count, radius, strokeWidth, strokeCap, strokeJoin, dashLength, dashGap]
+    [
+      count,
+      radius,
+      strokeWidth,
+      strokeCap,
+      strokeJoin,
+      dashLength,
+      dashGap,
+      fillColor,
+      fillOpacity,
+      strokeColor,
+      strokeOpacity,
+    ]
   );
 
   const handleCloseButtonClick = useCallback(function () {
@@ -114,6 +158,39 @@ function Plugin() {
           value={dashGap}
         />
       </div>
+
+      <VerticalSpace space="large" />
+
+      <div>
+        <Text>
+          <Muted>背景色</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <TextboxColor
+          hexColor={fillColor}
+          onHexColorInput={handleFillColorInput}
+          onOpacityInput={handleFillOpacityInput}
+          opacity={fillOpacity}
+        />
+      </div>
+
+      <VerticalSpace space="large" />
+
+      <div>
+        <Text>
+          <Muted>線の色</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <TextboxColor
+          hexColor={strokeColor}
+          onHexColorInput={handleStrokeColorInput}
+          onOpacityInput={handleStrokeOpacityInput}
+          opacity={strokeOpacity}
+        />
+      </div>
+
+      <VerticalSpace space="large" />
+
       <Columns space="extraSmall">
         <Button fullWidth onClick={handleCreateButtonClick}>
           生成

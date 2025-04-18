@@ -11,6 +11,7 @@ import {
   DropdownOption,
   RangeSlider,
   TextboxColor,
+  Stack,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -112,93 +113,108 @@ function Plugin() {
   }, []);
 
   return (
-    <Container space="medium">
-      <VerticalSpace space="large" />
-
-      <div>
+    <Stack space="small">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          height: "200px",
+          backgroundColor: "var(--figma-color-bg-brand-tertiary)",
+        }}
+      >
         <Text>
-          <Muted>破線</Muted>
+          <Muted>サンプル</Muted>
         </Text>
-        <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashLengthInput}
-          value={dashLength}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashLengthInput}
-          value={dashLength}
-        />
       </div>
+      <Container space="medium">
+        <VerticalSpace space="large" />
 
-      <VerticalSpace space="large" />
+        <div>
+          <Text>
+            <Muted>破線</Muted>
+          </Text>
+          <VerticalSpace space="small" />
+          <RangeSlider
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleDashLengthInput}
+            value={dashLength}
+          />
+          <VerticalSpace space="small" />
+          <TextboxNumeric
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleDashLengthInput}
+            value={dashLength}
+          />
+        </div>
 
-      <div>
-        <Text>
-          <Muted>間隔</Muted>
-        </Text>
+        <VerticalSpace space="large" />
+
+        <div>
+          <Text>
+            <Muted>間隔</Muted>
+          </Text>
+          <VerticalSpace space="small" />
+          <RangeSlider
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleDashGapInput}
+            value={dashGap}
+          />
+          <VerticalSpace space="small" />
+          <TextboxNumeric
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleDashGapInput}
+            value={dashGap}
+          />
+        </div>
+
+        <VerticalSpace space="large" />
+
+        <div>
+          <Text>
+            <Muted>背景色</Muted>
+          </Text>
+          <VerticalSpace space="small" />
+          <TextboxColor
+            hexColor={fillColor}
+            onHexColorInput={handleFillColorInput}
+            onOpacityInput={handleFillOpacityInput}
+            opacity={fillOpacity}
+          />
+        </div>
+
+        <VerticalSpace space="large" />
+
+        <div>
+          <Text>
+            <Muted>線の色</Muted>
+          </Text>
+          <VerticalSpace space="small" />
+          <TextboxColor
+            hexColor={strokeColor}
+            onHexColorInput={handleStrokeColorInput}
+            onOpacityInput={handleStrokeOpacityInput}
+            opacity={strokeOpacity}
+          />
+        </div>
+
+        <VerticalSpace space="large" />
+
+        <Columns space="extraSmall">
+          <Button fullWidth onClick={handleCreateButtonClick}>
+            生成
+          </Button>
+          <Button fullWidth onClick={handleCloseButtonClick} secondary>
+            閉じる
+          </Button>
+        </Columns>
         <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashGapInput}
-          value={dashGap}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashGapInput}
-          value={dashGap}
-        />
-      </div>
-
-      <VerticalSpace space="large" />
-
-      <div>
-        <Text>
-          <Muted>背景色</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <TextboxColor
-          hexColor={fillColor}
-          onHexColorInput={handleFillColorInput}
-          onOpacityInput={handleFillOpacityInput}
-          opacity={fillOpacity}
-        />
-      </div>
-
-      <VerticalSpace space="large" />
-
-      <div>
-        <Text>
-          <Muted>線の色</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <TextboxColor
-          hexColor={strokeColor}
-          onHexColorInput={handleStrokeColorInput}
-          onOpacityInput={handleStrokeOpacityInput}
-          opacity={strokeOpacity}
-        />
-      </div>
-
-      <VerticalSpace space="large" />
-
-      <Columns space="extraSmall">
-        <Button fullWidth onClick={handleCreateButtonClick}>
-          生成
-        </Button>
-        <Button fullWidth onClick={handleCloseButtonClick} secondary>
-          閉じる
-        </Button>
-      </Columns>
-      <VerticalSpace space="small" />
-    </Container>
+      </Container>
+    </Stack>
   );
 }
 

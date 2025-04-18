@@ -166,6 +166,6 @@ export default function () {
 
   showUI({
     height: 500,
-    width: 240,
+    width: 700,
   });
 }

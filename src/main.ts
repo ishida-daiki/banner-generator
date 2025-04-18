@@ -23,8 +23,8 @@ export default function () {
   let initialCenterX: number | null = null;
   let initialCenterY: number | null = null;
 
-  // プレビュー用の円を作成する関数
-  function createPreviewCircle(options: {
+  // プレビュー用の円を作成/更新する関数
+  function updatePreview(options: {
     radius: number;
     strokeWidth: number;
     strokeCap:
@@ -52,21 +52,130 @@ export default function () {
       strokeOpacity,
     } = options;
 
-    // 既存のプレビューがあれば削除
-    if (previewGroup) {
-      previewGroup.remove();
-    }
-
     // 初期位置が未設定の場合のみ、現在のビューポートの中心を使用
     if (initialCenterX === null || initialCenterY === null) {
       initialCenterX = figma.viewport.center.x;
       initialCenterY = figma.viewport.center.y;
     }
 
-    const circles = [];
+    // 既存のプレビューがあれば更新、なければ新規作成
+    if (previewCircle && previewGroup) {
+      // 既存の円を更新
+      previewCircle.resize(radius * 2, radius * 2);
+      previewCircle.x = initialCenterX - radius;
+      previewCircle.y = initialCenterY - radius;
+      previewCircle.strokeWeight = strokeWidth;
+      previewCircle.strokeCap = strokeCap;
+      previewCircle.strokeJoin = strokeJoin;
+      previewCircle.dashPattern = dashPattern;
+
+      // 線の色を設定
+      const strokeRgb = hexToRgb(strokeColor);
+      previewCircle.strokes = [
+        {
+          type: "SOLID",
+          color: strokeRgb,
+          opacity: strokeOpacity / 100,
+        },
+      ];
+
+      // 背景色を設定
+      const fillRgb = hexToRgb(fillColor);
+      previewCircle.fills = [
+        {
+          type: "SOLID",
+          color: fillRgb,
+          opacity: fillOpacity / 100,
+        },
+      ];
+    } else {
+      // 新規作成
+      const circle = figma.createEllipse();
+      circle.x = initialCenterX - radius;
+      circle.y = initialCenterY - radius;
+      circle.resize(radius * 2, radius * 2);
+      circle.strokeWeight = strokeWidth;
+      circle.strokeCap = strokeCap;
+      circle.strokeJoin = strokeJoin;
+      circle.dashPattern = dashPattern;
+
+      // 線の色を設定
+      const strokeRgb = hexToRgb(strokeColor);
+      circle.strokes = [
+        {
+          type: "SOLID",
+          color: strokeRgb,
+          opacity: strokeOpacity / 100,
+        },
+      ];
+
+      // 背景色を設定
+      const fillRgb = hexToRgb(fillColor);
+      circle.fills = [
+        {
+          type: "SOLID",
+          color: fillRgb,
+          opacity: fillOpacity / 100,
+        },
+      ];
+
+      const group = figma.group([circle], figma.currentPage);
+      group.name = "プレビュー";
+      previewCircle = circle;
+      previewGroup = group;
+    }
+
+    // プレビューを表示
+    if (previewGroup) {
+      figma.currentPage.selection = [previewGroup];
+      figma.viewport.scrollAndZoomIntoView([previewGroup]);
+    }
+  }
+
+  // Figmaに円を作成する関数
+  function createCircle(options: {
+    radius: number;
+    strokeWidth: number;
+    strokeCap:
+      | "NONE"
+      | "ROUND"
+      | "SQUARE"
+      | "ARROW_LINES"
+      | "ARROW_EQUILATERAL";
+    strokeJoin: "ROUND" | "MITER" | "BEVEL";
+    dashPattern: number[];
+    fillColor: string;
+    fillOpacity: number;
+    strokeColor: string;
+    strokeOpacity: number;
+  }) {
+    // プレビューを削除
+    if (previewGroup) {
+      previewGroup.remove();
+      previewCircle = null;
+      previewGroup = null;
+      initialCenterX = null;
+      initialCenterY = null;
+    }
+
+    const {
+      radius,
+      strokeWidth,
+      strokeCap,
+      strokeJoin,
+      dashPattern,
+      fillColor,
+      fillOpacity,
+      strokeColor,
+      strokeOpacity,
+    } = options;
+
+    const centerX = figma.viewport.center.x;
+    const centerY = figma.viewport.center.y;
+
     const circle = figma.createEllipse();
-    circle.x = initialCenterX - radius;
-    circle.y = initialCenterY - radius;
+    circle.x = centerX - radius;
+    circle.y = centerY - radius;
     circle.resize(radius * 2, radius * 2);
     circle.strokeWeight = strokeWidth;
     circle.strokeCap = strokeCap;
@@ -93,26 +202,10 @@ export default function () {
       },
     ];
 
-    circles.push(circle);
-    previewCircle = circle;
-
-    const group = figma.group(circles, figma.currentPage);
-    group.name = "プレビュー";
-    previewGroup = group;
+    const group = figma.group([circle], figma.currentPage);
+    group.name = "円";
     figma.currentPage.selection = [group];
     figma.viewport.scrollAndZoomIntoView([group]);
-  }
-
-  // プレビューをFigmaに追加する関数
-  function addToFigma() {
-    if (previewGroup) {
-      previewGroup.name = "円";
-      // 位置をリセット
-      initialCenterX = null;
-      initialCenterY = null;
-      previewGroup = null;
-      previewCircle = null;
-    }
   }
 
   once<CreateRectanglesHandler>("CREATE_RECTANGLES", function (count: number) {
@@ -134,29 +227,28 @@ export default function () {
   });
 
   on<CreateCircleHandler>("CREATE_CIRCLE", function (options) {
-    createPreviewCircle(options);
-    addToFigma();
+    createCircle(options);
   });
 
   on<PreviewCircleHandler>("PREVIEW_CIRCLE", function (options) {
-    createPreviewCircle(options);
+    updatePreview(options);
   });
 
   on<CreateRadialHandler>("CREATE_RADIAL", function (options) {
     const { count, length, width } = options;
-    // const centerX = figma.viewport.center.x;
-    // const centerY = figma.viewport.center.y;
+    const centerX = figma.viewport.center.x;
+    const centerY = figma.viewport.center.y;
     const angleStep = (2 * Math.PI) / count;
 
     const lines = [];
     for (let i = 0; i < count; i++) {
       const angle = i * angleStep;
-      // const endX = centerX + length * Math.cos(angle);
-      // const endY = centerY + length * Math.sin(angle);
+      const endX = centerX + length * Math.cos(angle);
+      const endY = centerY + length * Math.sin(angle);
 
       const line = figma.createLine();
-      // line.x = centerX;
-      // line.y = centerY;
+      line.x = centerX;
+      line.y = centerY;
       line.resize(length, 0);
       line.rotation = (angle * 180) / Math.PI;
       line.strokeWeight = width;
@@ -181,6 +273,6 @@ export default function () {
 
   showUI({
     height: 500,
-    width: 700,
+    width: 240,
   });
 }

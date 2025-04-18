@@ -75,7 +75,7 @@ function Plugin() {
 
       <div>
         <Text>
-          <Muted>破線の長さ</Muted>
+          <Muted>破線</Muted>
         </Text>
         <VerticalSpace space="small" />
         <RangeSlider
@@ -97,7 +97,7 @@ function Plugin() {
 
       <div>
         <Text>
-          <Muted>破線の間隔</Muted>
+          <Muted>間隔</Muted>
         </Text>
         <VerticalSpace space="small" />
         <RangeSlider

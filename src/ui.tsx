@@ -9,6 +9,7 @@ import {
   VerticalSpace,
   Dropdown,
   DropdownOption,
+  RangeSlider,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -32,6 +33,22 @@ function Plugin() {
     "ROUND"
   );
 
+  const [dashLength, setDashLength] = useState<string>("30");
+  const [dashGap, setDashGap] = useState<string>("30");
+
+  const minimum = 0;
+  const maximum = 500;
+
+  function handleDashLengthInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = event.currentTarget.value;
+    setDashLength(newValue);
+  }
+
+  function handleDashGapInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = event.currentTarget.value;
+    setDashGap(newValue);
+  }
+
   const handleCreateButtonClick = useCallback(
     function () {
       if (count !== null && radius !== null && strokeWidth !== null) {
@@ -41,11 +58,11 @@ function Plugin() {
           strokeWidth,
           strokeCap,
           strokeJoin,
-          dashPattern: [30, 30],
+          dashPattern: [Number(dashLength), Number(dashGap)],
         });
       }
     },
-    [count, radius, strokeWidth, strokeCap, strokeJoin]
+    [count, radius, strokeWidth, strokeCap, strokeJoin, dashLength, dashGap]
   );
 
   const handleCloseButtonClick = useCallback(function () {
@@ -55,21 +72,48 @@ function Plugin() {
   return (
     <Container space="medium">
       <VerticalSpace space="large" />
-      <Text>
-        <Muted>放射線の数</Muted>
-      </Text>
-      <VerticalSpace space="small" />
-      <TextboxNumeric
-        onNumericValueInput={setCount}
-        onValueInput={setCountString}
-        value={countString}
-      />
-      <VerticalSpace space="medium" />
-      <Text>
-        <Muted>長さ</Muted>
-      </Text>
-      <VerticalSpace space="small" />
-      <VerticalSpace space="extraLarge" />
+
+      <div>
+        <Text>
+          <Muted>破線の長さ</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <RangeSlider
+          maximum={maximum}
+          minimum={minimum}
+          onInput={handleDashLengthInput}
+          value={dashLength}
+        />
+        <VerticalSpace space="small" />
+        <TextboxNumeric
+          maximum={maximum}
+          minimum={minimum}
+          onInput={handleDashLengthInput}
+          value={dashLength}
+        />
+      </div>
+
+      <VerticalSpace space="large" />
+
+      <div>
+        <Text>
+          <Muted>破線の間隔</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <RangeSlider
+          maximum={maximum}
+          minimum={minimum}
+          onInput={handleDashGapInput}
+          value={dashGap}
+        />
+        <VerticalSpace space="small" />
+        <TextboxNumeric
+          maximum={maximum}
+          minimum={minimum}
+          onInput={handleDashGapInput}
+          value={dashGap}
+        />
+      </div>
       <Columns space="extraSmall">
         <Button fullWidth onClick={handleCreateButtonClick}>
           生成

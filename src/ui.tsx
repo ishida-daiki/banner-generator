@@ -81,7 +81,6 @@ function Plugin() {
     function () {
       if (count !== null && radius !== null && strokeWidth !== null) {
         emit<CreateCircleHandler>("CREATE_CIRCLE", {
-          count,
           radius,
           strokeWidth,
           strokeCap,
@@ -95,7 +94,6 @@ function Plugin() {
       }
     },
     [
-      count,
       radius,
       strokeWidth,
       strokeCap,

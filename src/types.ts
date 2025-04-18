@@ -8,7 +8,6 @@ export interface CreateRectanglesHandler extends EventHandler {
 export interface CreateCircleHandler extends EventHandler {
   name: "CREATE_CIRCLE";
   handler: (options: {
-    count: number;
     radius: number;
     strokeWidth: number;
     strokeCap:
@@ -17,7 +16,7 @@ export interface CreateCircleHandler extends EventHandler {
       | "SQUARE"
       | "ARROW_LINES"
       | "ARROW_EQUILATERAL";
-    strokeJoin: "MITER" | "BEVEL" | "ROUND";
+    strokeJoin: "ROUND" | "MITER" | "BEVEL";
     dashPattern: number[];
     fillColor: string;
     fillOpacity: number;
@@ -37,5 +36,10 @@ export interface CreateRadialHandler extends EventHandler {
 
 export interface CloseHandler extends EventHandler {
   name: "CLOSE";
+  handler: () => void;
+}
+
+export interface AddToFigmaHandler extends EventHandler {
+  name: "ADD_TO_FIGMA";
   handler: () => void;
 }

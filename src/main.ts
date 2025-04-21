@@ -40,14 +40,15 @@ export default function () {
         color: { r: 0.85, g: 0.85, b: 0.85 }, // #D9D9D9
       },
     ];
-    maskRect.name = "Rectangle 259";
 
-    const maskGroup = figma.group(
-      [maskRect, targetNode],
-      figma.currentPage,
-      figma.currentPage.children.indexOf(targetNode)
-    );
-    (targetNode as EllipseNode).isMask = true;
+    // まずグループを作成
+    const maskGroup = figma.group([maskRect], figma.currentPage);
+
+    // targetNodeを後からグループに追加（上に配置される）
+    maskGroup.appendChild(targetNode);
+
+    // マスクを適用
+    maskRect.isMask = true;
 
     return maskGroup;
   }

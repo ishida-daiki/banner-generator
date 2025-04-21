@@ -25,7 +25,7 @@ import {
 function Plugin() {
   const [count, setCount] = useState<number | null>(10);
   const [countString, setCountString] = useState("10");
-  const [radius, setRadius] = useState<number | null>(400);
+  const [radius, setRadius] = useState<number | null>(700);
   const [strokeWidth, setStrokeWidth] = useState<number | null>(400);
   const [strokeCap, setStrokeCap] = useState<
     "NONE" | "ROUND" | "SQUARE" | "ARROW_LINES" | "ARROW_EQUILATERAL"

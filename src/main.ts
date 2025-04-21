@@ -44,6 +44,9 @@ export default function () {
     // まずグループを作成
     const maskGroup = figma.group([maskRect], figma.currentPage);
 
+    // グループの名前を設定
+    maskGroup.name = "banner";
+
     // targetNodeを後からグループに追加（上に配置される）
     maskGroup.appendChild(targetNode);
 

@@ -23,6 +23,35 @@ export default function () {
   let initialCenterX: number | null = null;
   let initialCenterY: number | null = null;
 
+  function createMaskGroup(
+    targetNode: EllipseNode,
+    centerX: number,
+    centerY: number
+  ): GroupNode {
+    // マスク用の長方形を作成
+    const maskRect = figma.createRectangle();
+    maskRect.resize(1200, 630);
+    maskRect.x = centerX - maskRect.width / 2;
+    maskRect.y = centerY - maskRect.height / 2;
+    // 背景色を設定
+    maskRect.fills = [
+      {
+        type: "SOLID",
+        color: { r: 0.85, g: 0.85, b: 0.85 }, // #D9D9D9
+      },
+    ];
+    maskRect.name = "Rectangle 259";
+
+    const maskGroup = figma.group(
+      [maskRect, targetNode],
+      figma.currentPage,
+      figma.currentPage.children.indexOf(targetNode)
+    );
+    (targetNode as EllipseNode).isMask = true;
+
+    return maskGroup;
+  }
+
   // プレビュー用の円を作成/更新する関数
   function updatePreview(options: {
     radius: number;
@@ -88,6 +117,21 @@ export default function () {
           opacity: fillOpacity / 100,
         },
       ];
+
+      // 既存のグループを削除して新しいマスクグループを作成
+      const parent = previewCircle.parent;
+      if (parent) {
+        const circleGroup = figma.group([previewCircle], figma.currentPage);
+        circleGroup.name = "Ellipse";
+        parent.remove(); // 古いグループを削除
+
+        // // 新しいマスクグループを作成
+        // previewGroup = createMaskGroup(
+        //   circle,
+        //   initialCenterX,
+        //   initialCenterY
+        // );
+      }
     } else {
       // 新規作成
       const circle = figma.createEllipse();
@@ -119,10 +163,10 @@ export default function () {
         },
       ];
 
-      const group = figma.group([circle], figma.currentPage);
-      group.name = "プレビュー";
+      // マスクグループを作成
+      previewGroup = createMaskGroup(circle, initialCenterX, initialCenterY);
+
       previewCircle = circle;
-      previewGroup = group;
     }
 
     // プレビューを表示
@@ -173,6 +217,7 @@ export default function () {
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
+    // 円を作成
     const circle = figma.createEllipse();
     circle.x = centerX - radius;
     circle.y = centerY - radius;
@@ -202,29 +247,29 @@ export default function () {
       },
     ];
 
-    const group = figma.group([circle], figma.currentPage);
-    group.name = "円";
-    figma.currentPage.selection = [group];
-    figma.viewport.scrollAndZoomIntoView([group]);
-  }
+    const maskRect = figma.createRectangle();
+    maskRect.resize(1200, 630);
+    maskRect.x = centerX - maskRect.width / 2;
+    maskRect.y = centerY - maskRect.height / 2;
+    // 背景色を設定
+    maskRect.fills = [
+      {
+        type: "SOLID",
+        color: { r: 0.85, g: 0.85, b: 0.85 }, // #D9D9D9
+      },
+    ];
+    maskRect.name = "Rectangle 259";
 
-  once<CreateRectanglesHandler>("CREATE_RECTANGLES", function (count: number) {
-    const nodes: Array<SceneNode> = [];
-    for (let i = 0; i < count; i++) {
-      const rect = figma.createRectangle();
-      rect.x = i * 150;
-      rect.fills = [
-        {
-          color: { b: 0, g: 0.5, r: 1 },
-          type: "SOLID",
-        },
-      ];
-      figma.currentPage.appendChild(rect);
-      nodes.push(rect);
-    }
-    figma.currentPage.selection = nodes;
-    figma.viewport.scrollAndZoomIntoView(nodes);
-  });
+    // マスクグループを作成
+    const maskGroup = createMaskGroup(circle, centerX, centerY);
+
+    // マスクグループをページに追加
+    figma.currentPage.appendChild(maskGroup);
+    // 選択状態にする
+    figma.currentPage.selection = [maskGroup];
+    // maskGroupを画面の中心に表示し、適切なズームレベルに調整
+    figma.viewport.scrollAndZoomIntoView([maskGroup]);
+  }
 
   on<CreateCircleHandler>("CREATE_CIRCLE", function (options) {
     createCircle(options);

@@ -153,7 +153,7 @@ export default function () {
     circle.x = currentCenterX - radius;
     circle.y = currentCenterY - radius;
 
-    // その他の属性を更新
+    // ストロークの幅を更新
     circle.strokeWeight = strokeWidth;
     circle.strokeCap = strokeCap;
     circle.strokeJoin = strokeJoin;
@@ -178,6 +178,13 @@ export default function () {
         opacity: fillOpacity / 100,
       },
     ];
+
+    // 更新後のプロパティをUIに通知
+    figma.ui.postMessage({
+      type: "UPDATE_PROPERTIES",
+      strokeWidth: circle.strokeWeight,
+      radius: circle.width / 2,
+    });
   }
 
   on<CreateCircleHandler>("CREATE_CIRCLE", function (options) {

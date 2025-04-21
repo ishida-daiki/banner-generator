@@ -26,7 +26,7 @@ function Plugin() {
   const [count, setCount] = useState<number | null>(10);
   const [countString, setCountString] = useState("10");
   const [radius, setRadius] = useState<number | null>(700);
-  const [strokeWidth, setStrokeWidth] = useState<number | null>(400);
+  const [strokeWidth, setStrokeWidth] = useState<string>("400");
   const [strokeCap, setStrokeCap] = useState<
     "NONE" | "ROUND" | "SQUARE" | "ARROW_LINES" | "ARROW_EQUILATERAL"
   >("NONE");
@@ -80,6 +80,13 @@ function Plugin() {
     event: h.JSX.TargetedEvent<HTMLInputElement>
   ) {
     setStrokeOpacity(event.currentTarget.value);
+    updatePreview();
+  }
+
+  function handleStrokeWidthInput(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    setStrokeWidth(event.currentTarget.value);
     updatePreview();
   }
 
@@ -138,7 +145,7 @@ function Plugin() {
         // Figmaプレビューも更新
         emit<PreviewCircleHandler>("PREVIEW_CIRCLE", {
           radius,
-          strokeWidth,
+          strokeWidth: Number(strokeWidth),
           strokeCap,
           strokeJoin,
           dashPattern: [Number(dashLength), Number(dashGap)],
@@ -197,7 +204,7 @@ function Plugin() {
       if (count !== null && radius !== null && strokeWidth !== null) {
         emit<CreateCircleHandler>("CREATE_CIRCLE", {
           radius,
-          strokeWidth,
+          strokeWidth: Number(strokeWidth),
           strokeCap,
           strokeJoin,
           dashPattern: [Number(dashLength), Number(dashGap)],
@@ -290,6 +297,28 @@ function Plugin() {
             minimum={minimum}
             onInput={handleDashGapInput}
             value={dashGap}
+          />
+        </div>
+
+        <VerticalSpace space="large" />
+
+        <div>
+          <Text>
+            <Muted>strokeWidth</Muted>
+          </Text>
+          <VerticalSpace space="small" />
+          <RangeSlider
+            maximum={1000}
+            minimum={minimum}
+            onInput={handleStrokeWidthInput}
+            value={strokeWidth}
+          />
+          <VerticalSpace space="small" />
+          <TextboxNumeric
+            maximum={1000}
+            minimum={minimum}
+            onInput={handleStrokeWidthInput}
+            value={strokeWidth}
           />
         </div>
 

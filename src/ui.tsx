@@ -235,7 +235,7 @@ function Plugin() {
 
   return (
     <Stack space="small">
-      <div
+      {/* <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -254,13 +254,13 @@ function Plugin() {
             borderRadius: "4px",
           }}
         />
-      </div>
+      </div> */}
       <Container space="medium">
         <VerticalSpace space="large" />
 
         <div>
           <Text>
-            <Muted>破線</Muted>
+            <Muted>Stroke width</Muted>
           </Text>
           <VerticalSpace space="small" />
           <RangeSlider
@@ -282,7 +282,7 @@ function Plugin() {
 
         <div>
           <Text>
-            <Muted>間隔</Muted>
+            <Muted>Gap</Muted>
           </Text>
           <VerticalSpace space="small" />
           <RangeSlider
@@ -304,7 +304,7 @@ function Plugin() {
 
         <div>
           <Text>
-            <Muted>strokeWidth</Muted>
+            <Muted>Elipse size</Muted>
           </Text>
           <VerticalSpace space="small" />
           <RangeSlider
@@ -326,7 +326,7 @@ function Plugin() {
 
         <div>
           <Text>
-            <Muted>背景色</Muted>
+            <Muted>Background color</Muted>
           </Text>
           <VerticalSpace space="small" />
           <TextboxColor
@@ -341,7 +341,7 @@ function Plugin() {
 
         <div>
           <Text>
-            <Muted>線の色</Muted>
+            <Muted>Stroke color</Muted>
           </Text>
           <VerticalSpace space="small" />
           <TextboxColor

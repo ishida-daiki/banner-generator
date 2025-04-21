@@ -10,6 +10,7 @@ import {
   RangeSlider,
   TextboxColor,
   Stack,
+  Divider,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -323,6 +324,8 @@ function Plugin() {
         </div>
 
         <VerticalSpace space="large" />
+        <Divider />
+        <VerticalSpace space="large" />
 
         <div>
           <Text>
@@ -337,7 +340,7 @@ function Plugin() {
           />
         </div>
 
-        <VerticalSpace space="large" />
+        <VerticalSpace space="medium" />
 
         <div>
           <Text>

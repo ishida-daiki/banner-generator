@@ -27,7 +27,7 @@ function Plugin() {
   const [count, setCount] = useState<number | null>(10);
   const [countString, setCountString] = useState("10");
   const [radius, setRadius] = useState<number | null>(700);
-  const [strokeWidth, setStrokeWidth] = useState<string>("400");
+  const [strokeWidth, setStrokeWidth] = useState<string>("700");
   const [strokeCap, setStrokeCap] = useState<
     "NONE" | "ROUND" | "SQUARE" | "ARROW_LINES" | "ARROW_EQUILATERAL"
   >("NONE");
@@ -35,8 +35,8 @@ function Plugin() {
     "ROUND"
   );
 
-  const [dashLength, setDashLength] = useState<string>("30");
-  const [dashGap, setDashGap] = useState<string>("30");
+  const [dashLength, setDashLength] = useState<string>("120");
+  const [dashGap, setDashGap] = useState<string>("100");
 
   const minimum = 0;
   const maximum = 500;

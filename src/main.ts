@@ -247,19 +247,6 @@ export default function () {
       },
     ];
 
-    const maskRect = figma.createRectangle();
-    maskRect.resize(1200, 630);
-    maskRect.x = centerX - maskRect.width / 2;
-    maskRect.y = centerY - maskRect.height / 2;
-    // 背景色を設定
-    maskRect.fills = [
-      {
-        type: "SOLID",
-        color: { r: 0.85, g: 0.85, b: 0.85 }, // #D9D9D9
-      },
-    ];
-    maskRect.name = "Rectangle 259";
-
     // マスクグループを作成
     const maskGroup = createMaskGroup(circle, centerX, centerY);
 

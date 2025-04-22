@@ -27,7 +27,7 @@ import { RadialComponent } from "./components/Radial/RadialComponent";
 import { ConfettiComponent } from "./components/Confetti/ConfettiComponent";
 
 function Plugin() {
-  const [value, setBackgroundValue] = useState<string>("放射線");
+  const [value, setBackgroundValue] = useState<string>("confetti");
   const options: Array<DropdownOption> = [
     {
       value: "放射線",

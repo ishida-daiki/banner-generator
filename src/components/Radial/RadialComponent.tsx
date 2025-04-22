@@ -292,7 +292,7 @@ export function RadialComponent() {
         <Text>
           <Muted>Background color</Muted>
         </Text>
-        <VerticalSpace space="small" />
+        <VerticalSpace space="extraSmall" />
         <TextboxColor
           hexColor={fillColor}
           onHexColorInput={handleFillColorInput}
@@ -307,7 +307,7 @@ export function RadialComponent() {
         <Text>
           <Muted>Stroke color</Muted>
         </Text>
-        <VerticalSpace space="small" />
+        <VerticalSpace space="extraSmall" />
         <TextboxColor
           hexColor={strokeColor}
           onHexColorInput={handleStrokeColorInput}

@@ -18,12 +18,22 @@ import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
 import { CreateConfettiHandler } from "../../types";
 
+interface ColorWithOpacity {
+  color: string;
+  opacity: number;
+}
+
 export function ConfettiComponent() {
   const [count, setCount] = useState<string>("10");
   const [size, setSize] = useState<string>("24");
-  const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
+
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [fillColor, setFillColor] = useState<string>("E9816B");
+
+  // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
+  const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
+    { color: "E9816B", opacity: 100 },
+  ]);
 
   function handleFillColorInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     setFillColor(event.currentTarget.value);
@@ -35,48 +45,24 @@ export function ConfettiComponent() {
     setFillOpacity(event.currentTarget.value);
   }
 
-
   function handleCountInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
     setCount(newValue);
   }
 
-  // const handleFillOpacityInput = useCallback(function (value: string) {
-  //   setFillOpacity(value);
-  // }, []);
-
-  const handleAddColor = useCallback(
-    function () {
-      setFillColors([...fillColors, "E9816B"]);
-    },
-    [fillColors]
-  );
-
-  const handleRemoveColor = useCallback(
-    function (index: number) {
-      const newColors = fillColors.filter((_, i) => i !== index);
-      if (newColors.length > 0) {
-        setFillColors(newColors);
-      }
-    },
-    [fillColors]
-  );
-
-  const handleColorInput = useCallback(
-    function (value: string, index: number) {
-      const newColors = [...fillColors];
-      newColors[index] = value.replace("#", "");
-      setFillColors(newColors);
-    },
-    [fillColors]
-  );
+  // const handleAddColor = useCallback(
+  //   function () {
+  //     setFillColors([...fillColors, { color: "E9816B", opacity: 100 }]);
+  //   },
+  //   [fillColors]
+  // );
 
   const handleCreateButtonClick = useCallback(
     function () {
       emit<CreateConfettiHandler>("CREATE_CONFETTI", {
         count: parseInt(count),
         size: parseInt(size),
-        fillColors,
+        fillColors: fillColors.map((color) => color.color),
         fillOpacity: parseInt(fillOpacity),
       });
     },
@@ -111,19 +97,64 @@ export function ConfettiComponent() {
       </div>
 
       <VerticalSpace space="large" />
+      <Divider />
+      <VerticalSpace space="large" />
 
       <div>
-        <Text>
-          <Muted>Color 1</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <TextboxColor
-          hexColor={fillColor}
-          onHexColorInput={handleFillColorInput}
-          onOpacityInput={handleFillOpacityInput}
-          opacity={fillOpacity}
-        />
+        {fillColors.map((color, index) => (
+          <div key={index}>
+            <Text>
+              <Muted>Color {index + 1}</Muted>
+            </Text>
+            <VerticalSpace space="extraSmall" />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <TextboxColor
+                hexColor={color.color}
+                onHexColorInput={(
+                  event: h.JSX.TargetedEvent<HTMLInputElement>
+                ) => {
+                  const newColors = [...fillColors];
+                  newColors[index] = {
+                    ...newColors[index],
+                    color: event.currentTarget.value,
+                  };
+                  setFillColors(newColors);
+                }}
+                onOpacityInput={(
+                  event: h.JSX.TargetedEvent<HTMLInputElement>
+                ) => {
+                  const newColors = [...fillColors];
+                  newColors[index] = {
+                    ...newColors[index],
+                    opacity: parseInt(event.currentTarget.value),
+                  };
+                  setFillColors(newColors);
+                }}
+                opacity={String(color.opacity)}
+              />
+              {fillColors.length > 1 && (
+                <IconButton
+                  onClick={() => {
+                    const newColors = fillColors.filter((_, i) => i !== index);
+                    setFillColors(newColors);
+                  }}
+                >
+                  <IconTrash24 />
+                </IconButton>
+              )}
+            </div>
+            <VerticalSpace space="medium" />
+          </div>
+        ))}
+        <IconButton
+          onClick={() =>
+            setFillColors([...fillColors, { color: "E9816B", opacity: 100 }])
+          }
+        >
+          <IconPlus24 />
+        </IconButton>
       </div>
+
       {/* <div style={{ marginBottom: "8px" }}>
         {fillColors.map((color, index) => (
           <div
@@ -167,10 +198,10 @@ export function ConfettiComponent() {
         ))}
       </div> */}
 
-      <Button fullWidth onClick={handleAddColor}>
+      {/* <Button fullWidth onClick={handleAddColor}>
         <IconPlus24 />
         <text>色を追加</text>
-      </Button>
+      </Button> */}
 
       <VerticalSpace space="medium" />
       <VerticalSpace space="medium" />

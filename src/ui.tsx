@@ -11,6 +11,8 @@ import {
   TextboxColor,
   Stack,
   Divider,
+  Dropdown,
+  DropdownOption,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -45,6 +47,23 @@ function Plugin() {
   const [fillOpacity, setFillOpacity] = useState<string>("50");
   const [strokeColor, setStrokeColor] = useState<string>("FF00FF");
   const [strokeOpacity, setStrokeOpacity] = useState<string>("100");
+
+  const [value, setBackgroundValue] = useState<string>("放射線");
+  const options: Array<DropdownOption> = [
+    {
+      value: "放射線",
+    },
+    "-",
+    {
+      value: "confetti",
+    },
+    {
+      value: "風船",
+    },
+    {
+      value: "キラキラ",
+    },
+  ];
 
   function handleDashLengthInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
@@ -195,11 +214,6 @@ function Plugin() {
     }
   }, []);
 
-  // 初期プレビューを表示
-  // useEffect(() => {
-  //   updatePreview();
-  // }, [updatePreview]);
-
   const handleCreateButtonClick = useCallback(
     function () {
       if (count !== null && radius !== null && strokeWidth !== null) {
@@ -234,6 +248,14 @@ function Plugin() {
     emit<CloseHandler>("CLOSE");
   }, []);
 
+  function handleChangeBackground(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    const newValue = event.currentTarget.value;
+    console.log(newValue);
+    setBackgroundValue(newValue);
+  }
+
   return (
     <Stack space="small">
       {/* <div
@@ -256,7 +278,17 @@ function Plugin() {
           }}
         />
       </div> */}
+
+      
       <Container space="medium">
+        <VerticalSpace space="medium" />
+
+        <Dropdown
+          onChange={handleChangeBackground}
+          options={options}
+          value={value}
+        />
+
         <VerticalSpace space="large" />
 
         <div>

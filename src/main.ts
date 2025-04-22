@@ -240,7 +240,7 @@ export default function () {
   });
 
   showUI({
-    height: 500,
+    height: 550,
     width: 240,
   });
 }

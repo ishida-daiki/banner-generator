@@ -24,7 +24,7 @@ import {
   CreateCircleHandler,
   PreviewCircleHandler,
 } from "./types";
-import { RadialComponent } from "./components/RadialComponent";
+import { RadialComponent } from "./components/Radial/RadialComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("放射線");

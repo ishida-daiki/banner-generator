@@ -13,7 +13,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState, useEffect } from "preact/hooks";
 
-import { CreateCircleHandler, PreviewCircleHandler } from "./types";
+import { CreateCircleHandler, PreviewCircleHandler } from "./type";
 
 export function RadialComponent() {
   const [count, setCount] = useState<number | null>(10);

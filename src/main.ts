@@ -1,11 +1,10 @@
 import { showUI, on } from "@create-figma-plugin/utilities";
 
 import {
-  CloseHandler,
   CreateCircleHandler,
-  CreateRectanglesHandler,
-  CreateRadialHandler,
   PreviewCircleHandler,
+  CloseHandler,
+  CreateConfettiHandler,
 } from "./types";
 
 function hexToRgb(hex: string) {
@@ -202,31 +201,65 @@ export default function () {
     }
   });
 
-  on<CreateRadialHandler>("CREATE_RADIAL", function (options) {
-    const { count, length, width } = options;
+  on<CreateConfettiHandler>("CREATE_CONFETTI", function (options) {
+    const { count, size, fillColor, fillOpacity } = options;
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
-    const angleStep = (2 * Math.PI) / count;
 
-    const lines = [];
+    const confetti = [];
     for (let i = 0; i < count; i++) {
-      const angle = i * angleStep;
-      const endX = centerX + length * Math.cos(angle);
-      const endY = centerY + length * Math.sin(angle);
+      // ランダムな位置に配置
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * 300;
+      const x = centerX + Math.cos(angle) * distance;
+      const y = centerY + Math.sin(angle) * distance;
 
-      const line = figma.createLine();
-      line.x = centerX;
-      line.y = centerY;
-      line.resize(length, 0);
-      line.rotation = (angle * 180) / Math.PI;
-      line.strokeWeight = width;
-      line.strokes = [{ type: "SOLID", color: { r: 1, g: 0, b: 1 } }];
+      // 紙吹雪の形状を作成
+      const vector = figma.createVector();
+      vector.resize(24, 33); // サイズを24x33pxに設定
+      vector.x = x - 12; // 中心から12px左にずらす（24/2）
+      vector.y = y - 16.5; // 中心から16.5px上にずらす（33/2）
 
-      lines.push(line);
+      // SVGのパスデータをFigmaのベクトルパスに変換
+      vector.vectorPaths = [
+        {
+          windingRule: "NONZERO",
+          data:
+            "M 0.875331 32.5435 " +
+            "L 15.0463 32.5435 " +
+            "C 15.447 32.5435 15.7715 32.2097 15.782 31.7981 " +
+            "C 16.0783 20.1143 20.3291 13.1125 23.5769 1.26206 " +
+            "C 23.7081 0.783286 23.3549 0.306895 22.8702 0.306895 " +
+            "L 7.78384 0.306895 " +
+            "C 7.45584 0.306895 7.16801 0.534077 7.07849 0.857865 " +
+            "C 3.78611 12.7661 0.0873691 19.7795 0.142649 31.7953 " +
+            "C 0.144549 32.208 0.473724 32.5435 0.875331 32.5435 " +
+            "Z",
+        },
+      ];
+
+      // 色を設定
+      const rgb = hexToRgb(fillColor);
+      vector.fills = [
+        {
+          type: "SOLID",
+          color: rgb,
+          opacity: fillOpacity / 100,
+        },
+      ];
+
+      // ストロークを削除
+      vector.strokes = [];
+
+      // ランダムな回転を設定
+      vector.rotation = Math.random() * 360;
+
+      confetti.push(vector);
     }
 
-    const group = figma.group(lines, figma.currentPage);
-    group.name = "放射線";
+    // パーティクルをグループ化
+    const group = figma.group(confetti, figma.currentPage);
+    group.name = "Confetti";
     figma.currentPage.selection = [group];
     figma.viewport.scrollAndZoomIntoView([group]);
   });

@@ -25,12 +25,13 @@ export interface CreateCircleHandler extends EventHandler {
   }) => void;
 }
 
-export interface CreateRadialHandler extends EventHandler {
-  name: "CREATE_RADIAL";
+export interface CreateConfettiHandler extends EventHandler {
+  name: "CREATE_CONFETTI";
   handler: (options: {
-    count: number; // 放射状の数
-    length: number; // 各線の長さ
-    width: number; // 線の太さ
+    count: number;
+    size: number;
+    fillColor: string;
+    fillOpacity: number;
   }) => void;
 }
 

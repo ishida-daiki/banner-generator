@@ -20,11 +20,11 @@ import { useCallback, useState, useEffect } from "preact/hooks";
 
 import {
   CloseHandler,
-  CreateRadialHandler,
   CreateCircleHandler,
   PreviewCircleHandler,
 } from "./types";
 import { RadialComponent } from "./components/Radial/RadialComponent";
+import { ConfettiComponent } from "./components/Confetti/ConfettiComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("放射線");
@@ -90,11 +90,7 @@ function Plugin() {
 
         {value === "放射線" && <RadialComponent />}
 
-        {value === "confetti" && (
-          <Button fullWidth onClick={handleCreateButtonClick}>
-            生成
-          </Button>
-        )}
+        {value === "confetti" && <ConfettiComponent />}
         {value === "風船" && (
           <Button fullWidth onClick={handleCreateButtonClick}>
             生成

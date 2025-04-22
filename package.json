@@ -19,7 +19,7 @@
       "figma"
     ],
     "id": "preact-rectangles",
-    "name": "Preact Rectangles",
+    "name": "Banner Generator",
     "main": "src/main.ts",
     "ui": "src/ui.tsx"
   }

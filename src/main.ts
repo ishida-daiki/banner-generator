@@ -8,9 +8,26 @@ import {
 } from "./types";
 
 function hexToRgb(hex: string) {
-  const r = parseInt(hex.slice(0, 2), 16) / 255;
-  const g = parseInt(hex.slice(2, 4), 16) / 255;
-  const b = parseInt(hex.slice(4, 6), 16) / 255;
+  // #を削除し、3桁の場合は6桁に変換
+  const cleanHex = hex.replace("#", "").trim();
+  const validHex =
+    cleanHex.length === 3
+      ? cleanHex
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : cleanHex;
+
+  // 16進数を10進数に変換し、255で割って0-1の範囲に正規化
+  const r = parseInt(validHex.slice(0, 2), 16) / 255;
+  const g = parseInt(validHex.slice(2, 4), 16) / 255;
+  const b = parseInt(validHex.slice(4, 6), 16) / 255;
+
+  // NaNチェック
+  if (isNaN(r) || isNaN(g) || isNaN(b)) {
+    return { r: 0, g: 0, b: 0 }; // 無効な値の場合は黒を返す
+  }
+
   return { r, g, b };
 }
 
@@ -202,23 +219,23 @@ export default function () {
   });
 
   on<CreateConfettiHandler>("CREATE_CONFETTI", function (options) {
-    const { count, size, fillColor, fillOpacity } = options;
+    const { count, size, fillColors, fillOpacity } = options;
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
     const confetti = [];
     for (let i = 0; i < count; i++) {
-      // ランダムな位置に配置
+      // ランダムな位置に配置（範囲を150pxに縮小）
       const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * 300;
+      const distance = Math.random() * 150; // 300から150に変更
       const x = centerX + Math.cos(angle) * distance;
       const y = centerY + Math.sin(angle) * distance;
 
       // 紙吹雪の形状を作成
       const vector = figma.createVector();
-      vector.resize(24, 33); // サイズを24x33pxに設定
-      vector.x = x - 12; // 中心から12px左にずらす（24/2）
-      vector.y = y - 16.5; // 中心から16.5px上にずらす（33/2）
+      vector.resize(24, 33);
+      vector.x = x - 12;
+      vector.y = y - 16.5;
 
       // SVGのパスデータをFigmaのベクトルパスに変換
       vector.vectorPaths = [
@@ -238,8 +255,10 @@ export default function () {
         },
       ];
 
-      // 色を設定
-      const rgb = hexToRgb(fillColor);
+      // ランダムに色を選択
+      const randomColor =
+        fillColors[Math.floor(Math.random() * fillColors.length)];
+      const rgb = hexToRgb(randomColor);
       vector.fills = [
         {
           type: "SOLID",

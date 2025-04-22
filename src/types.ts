@@ -30,7 +30,7 @@ export interface CreateConfettiHandler extends EventHandler {
   handler: (options: {
     count: number;
     size: number;
-    fillColor: string;
+    fillColors: string[];
     fillOpacity: number;
   }) => void;
 }

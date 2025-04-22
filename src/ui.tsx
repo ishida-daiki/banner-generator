@@ -24,6 +24,7 @@ import {
   CreateCircleHandler,
   PreviewCircleHandler,
 } from "./types";
+import { RadialComponent } from "./components/RadialComponent";
 
 function Plugin() {
   const [count, setCount] = useState<number | null>(10);
@@ -279,7 +280,6 @@ function Plugin() {
         />
       </div> */}
 
-      
       <Container space="medium">
         <VerticalSpace space="medium" />
 
@@ -289,112 +289,43 @@ function Plugin() {
           value={value}
         />
 
-        <VerticalSpace space="large" />
-
-        <div>
-          <Text>
-            <Muted>Stroke width</Muted>
-          </Text>
-          <VerticalSpace space="small" />
-          <RangeSlider
+        {value === "放射線" && (
+          <RadialComponent
+            dashLength={dashLength}
+            dashGap={dashGap}
+            strokeWidth={strokeWidth}
+            fillColor={fillColor}
+            fillOpacity={fillOpacity}
+            strokeColor={strokeColor}
+            strokeOpacity={strokeOpacity}
+            minimum={minimum}
             maximum={maximum}
-            minimum={minimum}
-            onInput={handleDashLengthInput}
-            value={dashLength}
+            onDashLengthInput={handleDashLengthInput}
+            onDashGapInput={handleDashGapInput}
+            onStrokeWidthInput={handleStrokeWidthInput}
+            onFillColorInput={handleFillColorInput}
+            onFillOpacityInput={handleFillOpacityInput}
+            onStrokeColorInput={handleStrokeColorInput}
+            onStrokeOpacityInput={handleStrokeOpacityInput}
+            onCreateButtonClick={handleCreateButtonClick}
           />
-          <VerticalSpace space="small" />
-          <TextboxNumeric
-            maximum={maximum}
-            minimum={minimum}
-            onInput={handleDashLengthInput}
-            value={dashLength}
-          />
-        </div>
+        )}
 
-        <VerticalSpace space="large" />
-
-        <div>
-          <Text>
-            <Muted>Gap</Muted>
-          </Text>
-          <VerticalSpace space="small" />
-          <RangeSlider
-            maximum={maximum}
-            minimum={minimum}
-            onInput={handleDashGapInput}
-            value={dashGap}
-          />
-          <VerticalSpace space="small" />
-          <TextboxNumeric
-            maximum={maximum}
-            minimum={minimum}
-            onInput={handleDashGapInput}
-            value={dashGap}
-          />
-        </div>
-
-        <VerticalSpace space="large" />
-
-        <div>
-          <Text>
-            <Muted>Elipse size</Muted>
-          </Text>
-          <VerticalSpace space="small" />
-          <RangeSlider
-            maximum={1000}
-            minimum={minimum}
-            onInput={handleStrokeWidthInput}
-            value={strokeWidth}
-          />
-          <VerticalSpace space="small" />
-          <TextboxNumeric
-            maximum={1000}
-            minimum={minimum}
-            onInput={handleStrokeWidthInput}
-            value={strokeWidth}
-          />
-        </div>
-
-        <VerticalSpace space="large" />
-        <Divider />
-        <VerticalSpace space="large" />
-
-        <div>
-          <Text>
-            <Muted>Background color</Muted>
-          </Text>
-          <VerticalSpace space="small" />
-          <TextboxColor
-            hexColor={fillColor}
-            onHexColorInput={handleFillColorInput}
-            onOpacityInput={handleFillOpacityInput}
-            opacity={fillOpacity}
-          />
-        </div>
-
-        <VerticalSpace space="medium" />
-
-        <div>
-          <Text>
-            <Muted>Stroke color</Muted>
-          </Text>
-          <VerticalSpace space="small" />
-          <TextboxColor
-            hexColor={strokeColor}
-            onHexColorInput={handleStrokeColorInput}
-            onOpacityInput={handleStrokeOpacityInput}
-            opacity={strokeOpacity}
-          />
-        </div>
-
-        <VerticalSpace space="large" />
-
-        <Columns space="extraSmall">
+        {value === "confetti" && (
           <Button fullWidth onClick={handleCreateButtonClick}>
             生成
           </Button>
-        </Columns>
-        <VerticalSpace space="small" />
+        )}
+        {value === "風船" && (
+          <Button fullWidth onClick={handleCreateButtonClick}>
+            生成
+          </Button>
+        )}
+        {value === "キラキラ" && (
+          <Button fullWidth onClick={handleCreateButtonClick}>
+            生成
+          </Button>
+        )}
       </Container>
     </Stack>
   );

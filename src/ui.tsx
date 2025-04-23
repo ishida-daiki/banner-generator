@@ -25,6 +25,7 @@ import {
 } from "./types";
 import { RadialComponent } from "./components/Radial/RadialComponent";
 import { ConfettiComponent } from "./components/Confetti/ConfettiComponent";
+import { BalloonComponent } from "./components/Balloon/BalloonComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("放射線");
@@ -93,11 +94,7 @@ function Plugin() {
         {value === "放射線" && <RadialComponent />}
 
         {value === "confetti" && <ConfettiComponent />}
-        {value === "風船" && (
-          <Button fullWidth onClick={handleCreateButtonClick}>
-            生成
-          </Button>
-        )}
+        {value === "風船" && <BalloonComponent />}
         {value === "キラキラ" && (
           <Button fullWidth onClick={handleCreateButtonClick}>
             生成

@@ -236,9 +236,7 @@ export function RadialComponent() {
               <Bold>Stroke width</Bold>
             </Text>
           </div>
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "4px" }}
-          >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <RangeSlider
               maximum={maximum}
               minimum={minimum}
@@ -270,9 +268,7 @@ export function RadialComponent() {
               <Bold>Gap</Bold>
             </Text>
           </div>
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "4px" }}
-          >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <RangeSlider
               maximum={maximum}
               minimum={minimum}
@@ -304,9 +300,7 @@ export function RadialComponent() {
               <Bold>Elipse size</Bold>
             </Text>
           </div>
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "4px" }}
-          >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <RangeSlider
               maximum={1000}
               minimum={minimum}
@@ -351,7 +345,7 @@ export function RadialComponent() {
           />
         </div>
 
-        <VerticalSpace space="medium" />
+        <VerticalSpace space="small" />
 
         <div>
           <div
@@ -376,14 +370,24 @@ export function RadialComponent() {
         </div>
       </Container>
 
-      <VerticalSpace space="large" />
+      <VerticalSpace space="small" />
 
-      <Columns space="extraSmall">
+      <div
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          padding: "12px 16px 16px 16px",
+          background: "var(--figma-color-bg)",
+          borderTop: "1px solid var(--figma-color-border)",
+        }}
+      >
         <Button fullWidth onClick={handleCreateButtonClick}>
           生成
         </Button>
-      </Columns>
-      <VerticalSpace space="small" />
+      </div>
+      <VerticalSpace space="large" />
     </div>
   );
 }

@@ -233,11 +233,29 @@ export function ConfettiComponent() {
 
         <VerticalSpace space="small" />
 
+        <div style={{ width: "100%" }}>
+          <Button fullWidth onClick={handleCreateButtonClick}>
+            生成
+          </Button>
+        </div>
+      </Container>
+      <VerticalSpace space="medium" />
+      <div
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          padding: "16px",
+          background: "var(--figma-color-bg)",
+          borderTop: "1px solid var(--figma-color-border)",
+        }}
+      >
         <Button fullWidth onClick={handleCreateButtonClick}>
           生成
         </Button>
-      </Container>
-      <VerticalSpace space="medium" />
+      </div>
+      <VerticalSpace space="large" />
     </div>
   );
 }

@@ -204,6 +204,7 @@ export function ConfettiComponent() {
                 </div>
               )}
             </div>
+            <VerticalSpace space="extraSmall" />
           </div>
         ))}
       </div>

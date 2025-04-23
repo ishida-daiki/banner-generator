@@ -94,7 +94,7 @@ function Plugin() {
 
         {value === "放射線" && <RadialComponent />}
 
-        {value === "confetti" && <ConfettiComponent />}
+        {value === "紙吹雪" && <ConfettiComponent />}
         {value === "風船" && <BalloonComponent />}
         {value === "キラキラ" && <SparkleComponent />}
       </div>

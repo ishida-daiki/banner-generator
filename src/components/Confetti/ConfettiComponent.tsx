@@ -11,6 +11,7 @@ import {
   IconPlus24,
   IconBorderSmallSmall24,
   IconEyeSmall24,
+  Toggle,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -25,6 +26,7 @@ interface ColorWithOpacity {
 export function ConfettiComponent() {
   const [count, setCount] = useState<string>("10");
   const [size, setSize] = useState<string>("24");
+  const [isRandom, setIsRandom] = useState<boolean>(true);
 
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [fillColor, setFillColor] = useState<string>("E9816B");
@@ -63,6 +65,11 @@ export function ConfettiComponent() {
     return baseRange * scaleFactor;
   };
 
+  function handleChange(event: h.JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = event.currentTarget.checked;
+    setIsRandom(newValue);
+  }
+
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
@@ -71,10 +78,11 @@ export function ConfettiComponent() {
         size: parseInt(size),
         fillColors: fillColors.map((color) => color.color),
         fillOpacity: parseInt(fillOpacity),
-        spreadRange: calculateSpreadRange(countNum), // 追加：動的な散布範囲
+        spreadRange: calculateSpreadRange(countNum),
+        isRandom: isRandom,
       });
     },
-    [count, size, fillColors, fillOpacity]
+    [count, size, fillColors, fillOpacity, isRandom]
   );
 
   const minimum = 0;
@@ -196,13 +204,20 @@ export function ConfettiComponent() {
                 </div>
               )}
             </div>
-            <VerticalSpace space="extraSmall" />
           </div>
         ))}
       </div>
 
-      <VerticalSpace space="medium" />
-      <VerticalSpace space="medium" />
+      <VerticalSpace space="small" />
+      <Divider />
+      <VerticalSpace space="small" />
+
+      <Toggle onChange={handleChange} value={isRandom}>
+        <Text>ランダムに設定する</Text>
+      </Toggle>
+
+      <VerticalSpace space="small" />
+
       <Button fullWidth onClick={handleCreateButtonClick}>
         生成
       </Button>

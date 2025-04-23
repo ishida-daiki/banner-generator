@@ -219,17 +219,30 @@ export default function () {
   });
 
   on<CreateConfettiHandler>("CREATE_CONFETTI", function (options) {
-    const { count, size, fillColors, fillOpacity, spreadRange } = options;
+    const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
+      options;
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
     const confetti = [];
     for (let i = 0; i < count; i++) {
-      // ランダムな位置に配置（範囲を150pxに縮小）
-      const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * spreadRange;
-      const x = centerX + Math.cos(angle) * distance;
-      const y = centerY + Math.sin(angle) * distance;
+      let x, y;
+
+      if (isRandom) {
+        // ランダム分布の場合
+        const angle = (i / count) * Math.PI * 2;
+        const randomAngle = ((Math.random() - 0.5) * Math.PI) / 4;
+        const baseDistance = Math.random() * spreadRange;
+        const distance = baseDistance * (0.7 + Math.random() * 0.3);
+        x = centerX + Math.cos(angle + randomAngle) * distance;
+        y = centerY + Math.sin(angle + randomAngle) * distance;
+      } else {
+        // 横並びで等間隔に配置
+        const spacing = 40; // 要素間の間隔
+        const totalWidth = (count - 1) * spacing; // 全体の幅
+        x = centerX - totalWidth / 2 + i * spacing; // 中心から左右に均等に配置
+        y = centerY; // 高さは固定
+      }
 
       // 紙吹雪の形状を作成
       const vector = figma.createVector();
@@ -271,7 +284,9 @@ export default function () {
       vector.strokes = [];
 
       // ランダムな回転を設定
-      vector.rotation = Math.random() * 360;
+      if (isRandom) {
+        vector.rotation = Math.random() * 360;
+      }
 
       confetti.push(vector);
     }

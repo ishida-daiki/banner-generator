@@ -152,73 +152,78 @@ export function ConfettiComponent() {
             </IconButton>
           </div>
           <VerticalSpace space="extraSmall" />
-          {fillColors.map((color, index) => (
-            <div key={index}>
-              {/* <Text>
-                <Muted>Color {index + 1}</Muted>
-              </Text>
-              <VerticalSpace space="extraSmall" /> */}
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <TextboxColor
-                  hexColor={color.color}
-                  onHexColorInput={(
-                    event: h.JSX.TargetedEvent<HTMLInputElement>
-                  ) => {
-                    const newColors = [...fillColors];
-                    newColors[index] = {
-                      ...newColors[index],
-                      color: event.currentTarget.value,
-                    };
-                    setFillColors(newColors);
-                  }}
-                  onOpacityInput={(
-                    event: h.JSX.TargetedEvent<HTMLInputElement>
-                  ) => {
-                    const newColors = [...fillColors];
-                    newColors[index] = {
-                      ...newColors[index],
-                      opacity: parseInt(event.currentTarget.value),
-                    };
-                    setFillColors(newColors);
-                  }}
-                  opacity={String(color.opacity)}
-                />
-                {fillColors.length > 1 && (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
+          <div
+            style={{
+              height: "236px",
+              overflowY: "auto",
+              paddingRight: "12px",
+              marginRight: "-12px", // スクロールバーのスペースを確保
+            }}
+          >
+            {fillColors.map((color, index) => (
+              <div key={index}>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
+                  <TextboxColor
+                    hexColor={color.color}
+                    onHexColorInput={(
+                      event: h.JSX.TargetedEvent<HTMLInputElement>
+                    ) => {
+                      const newColors = [...fillColors];
+                      newColors[index] = {
+                        ...newColors[index],
+                        color: event.currentTarget.value,
+                      };
+                      setFillColors(newColors);
                     }}
-                  >
-                    <IconButton
-                      onClick={() => {
-                        const newColors = fillColors.filter(
-                          (_, i) => i !== index
-                        );
-                        setFillColors(newColors);
+                    onOpacityInput={(
+                      event: h.JSX.TargetedEvent<HTMLInputElement>
+                    ) => {
+                      const newColors = [...fillColors];
+                      newColors[index] = {
+                        ...newColors[index],
+                        opacity: parseInt(event.currentTarget.value),
+                      };
+                      setFillColors(newColors);
+                    }}
+                    opacity={String(color.opacity)}
+                  />
+                  {fillColors.length > 1 && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
                       }}
                     >
-                      <IconEyeSmall24 />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        const newColors = fillColors.filter(
-                          (_, i) => i !== index
-                        );
-                        setFillColors(newColors);
-                      }}
-                    >
-                      <IconBorderSmallSmall24 />
-                    </IconButton>
-                  </div>
-                )}
+                      <IconButton
+                        onClick={() => {
+                          const newColors = fillColors.filter(
+                            (_, i) => i !== index
+                          );
+                          setFillColors(newColors);
+                        }}
+                      >
+                        <IconEyeSmall24 />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          const newColors = fillColors.filter(
+                            (_, i) => i !== index
+                          );
+                          setFillColors(newColors);
+                        }}
+                      >
+                        <IconBorderSmallSmall24 />
+                      </IconButton>
+                    </div>
+                  )}
+                </div>
+                <VerticalSpace space="extraSmall" />
               </div>
-              <VerticalSpace space="extraSmall" />
-            </div>
-          ))}
+            ))}
+          </div>
         </Container>
       </div>
 

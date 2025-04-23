@@ -1,7 +1,5 @@
 import {
   Button,
-  Columns,
-  Muted,
   Text,
   TextboxNumeric,
   VerticalSpace,
@@ -9,12 +7,10 @@ import {
   TextboxColor,
   Divider,
   Bold,
-  Container,
   IconButton,
   IconPlus24,
   IconBorderSmallSmall24,
   IconEyeSmall24,
-  IconTrash24,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";

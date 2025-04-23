@@ -219,7 +219,7 @@ export default function () {
   });
 
   on<CreateConfettiHandler>("CREATE_CONFETTI", function (options) {
-    const { count, size, fillColors, fillOpacity } = options;
+    const { count, size, fillColors, fillOpacity, spreadRange } = options;
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
@@ -227,7 +227,7 @@ export default function () {
     for (let i = 0; i < count; i++) {
       // ランダムな位置に配置（範囲を150pxに縮小）
       const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * 150; // 300から150に変更
+      const distance = Math.random() * spreadRange;
       const x = centerX + Math.cos(angle) * distance;
       const y = centerY + Math.sin(angle) * distance;
 

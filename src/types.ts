@@ -32,6 +32,7 @@ export interface CreateConfettiHandler extends EventHandler {
     size: number;
     fillColors: string[];
     fillOpacity: number;
+    spreadRange: number;
   }) => void;
 }
 

@@ -55,14 +55,23 @@ export function ConfettiComponent() {
   //   },
   //   [fillColors]
   // );
+  // カウントに基づいて散布範囲を計算する関数
+  const calculateSpreadRange = (count: number) => {
+    // 基本の範囲を150とし、要素数に応じて調整
+    const baseRange = 150;
+    const scaleFactor = Math.sqrt(count / 10); // 10個を基準として調整
+    return baseRange * scaleFactor;
+  };
 
   const handleCreateButtonClick = useCallback(
     function () {
+      const countNum = parseInt(count);
       emit<CreateConfettiHandler>("CREATE_CONFETTI", {
-        count: parseInt(count),
+        count: countNum,
         size: parseInt(size),
         fillColors: fillColors.map((color) => color.color),
         fillOpacity: parseInt(fillOpacity),
+        spreadRange: calculateSpreadRange(countNum), // 追加：動的な散布範囲
       });
     },
     [count, size, fillColors, fillOpacity]

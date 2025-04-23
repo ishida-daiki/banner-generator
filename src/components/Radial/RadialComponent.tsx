@@ -8,6 +8,8 @@ import {
   RangeSlider,
   TextboxColor,
   Divider,
+  Container,
+  Bold,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -220,101 +222,159 @@ export function RadialComponent() {
     <div>
       <VerticalSpace space="large" />
 
-      <div>
-        <Text>
-          <Muted>Stroke width</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashLengthInput}
-          value={dashLength}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashLengthInput}
-          value={dashLength}
-        />
-      </div>
+      <Container space="medium">
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "24px",
+            }}
+          >
+            <Text>
+              <Bold>Stroke width</Bold>
+            </Text>
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          >
+            <RangeSlider
+              maximum={maximum}
+              minimum={minimum}
+              onInput={handleDashLengthInput}
+              value={dashLength}
+            />
+            <TextboxNumeric
+              maximum={maximum}
+              minimum={minimum}
+              onInput={handleDashLengthInput}
+              value={dashLength}
+              style={{ width: "40px" }}
+            />
+          </div>
+        </div>
 
-      <VerticalSpace space="large" />
+        <VerticalSpace space="medium" />
 
-      <div>
-        <Text>
-          <Muted>Gap</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashGapInput}
-          value={dashGap}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleDashGapInput}
-          value={dashGap}
-        />
-      </div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "24px",
+            }}
+          >
+            <Text>
+              <Bold>Gap</Bold>
+            </Text>
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          >
+            <RangeSlider
+              maximum={maximum}
+              minimum={minimum}
+              onInput={handleDashGapInput}
+              value={dashGap}
+            />
+            <TextboxNumeric
+              maximum={maximum}
+              minimum={minimum}
+              onInput={handleDashGapInput}
+              value={dashGap}
+              style={{ width: "40px" }}
+            />
+          </div>
+        </div>
 
-      <VerticalSpace space="large" />
+        <VerticalSpace space="medium" />
 
-      <div>
-        <Text>
-          <Muted>Elipse size</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={1000}
-          minimum={minimum}
-          onInput={handleStrokeWidthInput}
-          value={strokeWidth}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={1000}
-          minimum={minimum}
-          onInput={handleStrokeWidthInput}
-          value={strokeWidth}
-        />
-      </div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "24px",
+            }}
+          >
+            <Text>
+              <Bold>Elipse size</Bold>
+            </Text>
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          >
+            <RangeSlider
+              maximum={1000}
+              minimum={minimum}
+              onInput={handleStrokeWidthInput}
+              value={strokeWidth}
+            />
+            <TextboxNumeric
+              maximum={1000}
+              minimum={minimum}
+              onInput={handleStrokeWidthInput}
+              value={strokeWidth}
+              style={{ width: "40px" }}
+            />
+          </div>
+        </div>
+      </Container>
 
-      <VerticalSpace space="large" />
+      <VerticalSpace space="small" />
       <Divider />
-      <VerticalSpace space="large" />
+      <VerticalSpace space="small" />
 
-      <div>
-        <Text>
-          <Muted>Background color</Muted>
-        </Text>
-        <VerticalSpace space="extraSmall" />
-        <TextboxColor
-          hexColor={fillColor}
-          onHexColorInput={handleFillColorInput}
-          onOpacityInput={handleFillOpacityInput}
-          opacity={fillOpacity}
-        />
-      </div>
+      <Container space="medium">
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "24px",
+            }}
+          >
+            <Text>
+              <Bold>Background color</Bold>
+            </Text>
+          </div>
+          <VerticalSpace space="extraSmall" />
+          <TextboxColor
+            hexColor={fillColor}
+            onHexColorInput={handleFillColorInput}
+            onOpacityInput={handleFillOpacityInput}
+            opacity={fillOpacity}
+          />
+        </div>
 
-      <VerticalSpace space="medium" />
+        <VerticalSpace space="medium" />
 
-      <div>
-        <Text>
-          <Muted>Stroke color</Muted>
-        </Text>
-        <VerticalSpace space="extraSmall" />
-        <TextboxColor
-          hexColor={strokeColor}
-          onHexColorInput={handleStrokeColorInput}
-          onOpacityInput={handleStrokeOpacityInput}
-          opacity={strokeOpacity}
-        />
-      </div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "24px",
+            }}
+          >
+            <Text>
+              <Bold>Stroke color</Bold>
+            </Text>
+          </div>
+          <VerticalSpace space="extraSmall" />
+          <TextboxColor
+            hexColor={strokeColor}
+            onHexColorInput={handleStrokeColorInput}
+            onOpacityInput={handleStrokeOpacityInput}
+            opacity={strokeOpacity}
+          />
+        </div>
+      </Container>
 
       <VerticalSpace space="large" />
 

@@ -307,7 +307,7 @@ export default function () {
   });
 
   showUI({
-    height: 450,
+    height: 470,
     width: 240,
   });
 }

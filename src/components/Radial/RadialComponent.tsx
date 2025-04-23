@@ -230,6 +230,7 @@ export function RadialComponent() {
               justifyContent: "space-between",
               alignItems: "center",
               height: "24px",
+              marginBottom: "4px",
             }}
           >
             <Text>
@@ -262,6 +263,7 @@ export function RadialComponent() {
               justifyContent: "space-between",
               alignItems: "center",
               height: "24px",
+              marginBottom: "4px",
             }}
           >
             <Text>
@@ -294,6 +296,7 @@ export function RadialComponent() {
               justifyContent: "space-between",
               alignItems: "center",
               height: "24px",
+              marginBottom: "4px",
             }}
           >
             <Text>
@@ -381,13 +384,13 @@ export function RadialComponent() {
           padding: "12px 16px 16px 16px",
           background: "var(--figma-color-bg)",
           borderTop: "1px solid var(--figma-color-border)",
+          zIndex: 2,
         }}
       >
         <Button fullWidth onClick={handleCreateButtonClick}>
           生成
         </Button>
       </div>
-      <VerticalSpace space="large" />
     </div>
   );
 }

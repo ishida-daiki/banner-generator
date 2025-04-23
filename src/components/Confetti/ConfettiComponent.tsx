@@ -99,13 +99,13 @@ export function ConfettiComponent() {
             justifyContent: "space-between",
             alignItems: "center",
             height: "24px",
+            marginBottom: "4px",
           }}
         >
           <Text>
             <Bold>Count</Bold>
           </Text>
         </div>
-        <VerticalSpace space="extraSmall" />
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <RangeSlider
             maximum={maximum}
@@ -222,11 +222,18 @@ export function ConfettiComponent() {
         </Container>
       </div>
 
-      <VerticalSpace space="extraSmall" />
-      <Divider />
-      <VerticalSpace space="small" />
-
-      <Container space="medium">
+      <div
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          padding: "12px 16px 16px 16px",
+          background: "var(--figma-color-bg)",
+          borderTop: "1px solid var(--figma-color-border)",
+          zIndex: 2,
+        }}
+      >
         <Toggle onChange={handleChange} value={isRandom}>
           <Text>ランダムに設定する</Text>
         </Toggle>
@@ -238,24 +245,7 @@ export function ConfettiComponent() {
             生成
           </Button>
         </div>
-      </Container>
-      <VerticalSpace space="medium" />
-      <div
-        style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          padding: "16px",
-          background: "var(--figma-color-bg)",
-          borderTop: "1px solid var(--figma-color-border)",
-        }}
-      >
-        <Button fullWidth onClick={handleCreateButtonClick}>
-          生成
-        </Button>
       </div>
-      <VerticalSpace space="large" />
     </div>
   );
 }

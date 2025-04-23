@@ -26,6 +26,7 @@ import {
 import { RadialComponent } from "./components/Radial/RadialComponent";
 import { ConfettiComponent } from "./components/Confetti/ConfettiComponent";
 import { BalloonComponent } from "./components/Balloon/BalloonComponent";
+import { SparkleComponent } from "./components/Sparkle/SparkleComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("放射線");
@@ -35,7 +36,7 @@ function Plugin() {
     },
     "-",
     {
-      value: "confetti",
+      value: "紙吹雪",
     },
     {
       value: "風船",
@@ -95,11 +96,7 @@ function Plugin() {
 
         {value === "confetti" && <ConfettiComponent />}
         {value === "風船" && <BalloonComponent />}
-        {value === "キラキラ" && (
-          <Button fullWidth onClick={handleCreateButtonClick}>
-            生成
-          </Button>
-        )}
+        {value === "キラキラ" && <SparkleComponent />}
       </div>
     </Stack>
   );

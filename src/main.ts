@@ -6,6 +6,7 @@ import {
   CloseHandler,
   CreateConfettiHandler,
   CreateBalloonHandler,
+  CreateSparkleHandler,
 } from "./types";
 
 function hexToRgb(hex: string) {
@@ -352,6 +353,86 @@ export default function () {
             "C 48.8656 97.0473 54.7645 94.8897 60.1345 90.6568 " +
             "C 79.0941 75.699 86.0037 46.7331 75.9944 24.4361 " +
             "L 76.0017 24.4365 " +
+            "Z",
+        },
+      ];
+
+      // ランダムに色を選択
+      const randomColor =
+        fillColors[Math.floor(Math.random() * fillColors.length)];
+      const rgb = hexToRgb(randomColor);
+      vector.fills = [
+        {
+          type: "SOLID",
+          color: rgb,
+          opacity: fillOpacity / 100,
+        },
+      ];
+
+      // ストロークを削除
+      vector.strokes = [];
+
+      // ランダムな回転を設定
+      if (isRandom) {
+        vector.rotation = Math.random() * 360;
+      }
+
+      confetti.push(vector);
+    }
+
+    // パーティクルをグループ化
+    const group = figma.group(confetti, figma.currentPage);
+    group.name = "Confetti";
+    figma.currentPage.selection = [group];
+    figma.viewport.scrollAndZoomIntoView([group]);
+  });
+
+  on<CreateSparkleHandler>("CREATE_SPARKLE", function (options) {
+    const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
+      options;
+    const centerX = figma.viewport.center.x;
+    const centerY = figma.viewport.center.y;
+
+    const confetti = [];
+    for (let i = 0; i < count; i++) {
+      let x, y;
+
+      if (isRandom) {
+        // ランダム分布の場合
+        const angle = (i / count) * Math.PI * 2;
+        const randomAngle = ((Math.random() - 0.5) * Math.PI) / 4;
+        const baseDistance = Math.random() * spreadRange;
+        const distance = baseDistance * (0.7 + Math.random() * 0.3);
+        x = centerX + Math.cos(angle + randomAngle) * distance;
+        y = centerY + Math.sin(angle + randomAngle) * distance;
+      } else {
+        // 横並びで等間隔に配置
+        const spacing = 100; // 要素間の間隔
+        const totalWidth = (count - 1) * spacing; // 全体の幅
+        x = centerX - totalWidth / 2 + i * spacing; // 中心から左右に均等に配置
+        y = centerY; // 高さは固定
+      }
+
+      // 紙吹雪の形状を作成
+      const vector = figma.createVector();
+      vector.resize(24, 33);
+      vector.x = x - 12;
+      vector.y = y - 16.5;
+
+      // SVGのパスデータをFigmaのベクトルパスに変換
+      vector.vectorPaths = [
+        {
+          windingRule: "NONZERO",
+          data:
+            "M 40.6045 8.89746 " +
+            "C 33.5713 27.3301 18.6846 41.666 0 48 " +
+            "C 18.6846 54.334 33.5713 68.6699 40.6045 87.1025 " +
+            "L 44 96 " +
+            "L 47.3955 87.1025 " +
+            "C 54.4287 68.6699 69.3154 54.334 88 48 " +
+            "C 69.3154 41.666 54.4287 27.3301 47.3955 8.89746 " +
+            "L 44 0 " +
+            "L 40.6045 8.89746 " +
             "Z",
         },
       ];

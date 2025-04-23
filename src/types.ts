@@ -49,6 +49,18 @@ export interface CreateBalloonHandler extends EventHandler {
   }) => void;
 }
 
+export interface CreateSparkleHandler extends EventHandler {
+  name: "CREATE_SPARKLE";
+  handler: (options: {
+    count: number;
+    size: number;
+    fillColors: string[];
+    fillOpacity: number;
+    spreadRange: number;
+    isRandom: boolean;
+  }) => void;
+}
+
 export interface CloseHandler extends EventHandler {
   name: "CLOSE";
   handler: () => void;

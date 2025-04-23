@@ -17,15 +17,15 @@ import {
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateConfettiHandler } from "../../types";
+import { CreateSparkleHandler } from "../../types";
 
 interface ColorWithOpacity {
   color: string;
   opacity: number;
 }
 
-export function ConfettiComponent() {
-  const [count, setCount] = useState<string>("10");
+export function SparkleComponent() {
+  const [count, setCount] = useState<string>("3");
   const [size, setSize] = useState<string>("24");
   const [isRandom, setIsRandom] = useState<boolean>(true);
 
@@ -52,12 +52,6 @@ export function ConfettiComponent() {
     setCount(newValue);
   }
 
-  // const handleAddColor = useCallback(
-  //   function () {
-  //     setFillColors([...fillColors, { color: "E9816B", opacity: 100 }]);
-  //   },
-  //   [fillColors]
-  // );
   // カウントに基づいて散布範囲を計算する関数
   const calculateSpreadRange = (count: number) => {
     // 基本の範囲を150とし、要素数に応じて調整
@@ -74,7 +68,7 @@ export function ConfettiComponent() {
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
-      emit<CreateConfettiHandler>("CREATE_CONFETTI", {
+      emit<CreateSparkleHandler>("CREATE_SPARKLE", {
         count: countNum,
         size: parseInt(size),
         fillColors: fillColors.map((color) => color.color),
@@ -87,7 +81,7 @@ export function ConfettiComponent() {
   );
 
   const minimum = 0;
-  const maximum = 200;
+  const maximum = 20;
 
   return (
     <div>

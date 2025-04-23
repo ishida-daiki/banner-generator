@@ -220,9 +220,8 @@ export function RadialComponent() {
 
   return (
     <div>
-      <VerticalSpace space="large" />
-
       <Container space="medium">
+        <VerticalSpace space="extraSmall" />
         <div>
           <div
             style={{
@@ -254,7 +253,7 @@ export function RadialComponent() {
           </div>
         </div>
 
-        <VerticalSpace space="medium" />
+        <VerticalSpace space="extraSmall" />
 
         <div>
           <div
@@ -287,7 +286,7 @@ export function RadialComponent() {
           </div>
         </div>
 
-        <VerticalSpace space="medium" />
+        <VerticalSpace space="extraSmall" />
 
         <div>
           <div
@@ -323,7 +322,7 @@ export function RadialComponent() {
 
       <VerticalSpace space="small" />
       <Divider />
-      <VerticalSpace space="small" />
+      <VerticalSpace space="extraSmall" />
 
       <Container space="medium">
         <div>

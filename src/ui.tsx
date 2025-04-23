@@ -82,11 +82,13 @@ function Plugin() {
       <div>
         <VerticalSpace space="medium" />
 
-        <Dropdown
-          onChange={handleChangeBackground}
-          options={options}
-          value={value}
-        />
+        <Container space="medium">
+          <Dropdown
+            onChange={handleChangeBackground}
+            options={options}
+            value={value}
+          />
+        </Container>
 
         {value === "放射線" && <RadialComponent />}
 

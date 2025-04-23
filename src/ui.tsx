@@ -13,6 +13,8 @@ import {
   Divider,
   Dropdown,
   DropdownOption,
+  Tabs,
+  TabsOption,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -29,20 +31,14 @@ import { BalloonComponent } from "./components/Balloon/BalloonComponent";
 import { SparkleComponent } from "./components/Sparkle/SparkleComponent";
 
 function Plugin() {
-  const [value, setBackgroundValue] = useState<string>("放射線");
+  const [value, setBackgroundValue] = useState<string>("Background");
   const options: Array<DropdownOption> = [
     {
-      value: "放射線",
+      value: "Background",
     },
     "-",
     {
-      value: "紙吹雪",
-    },
-    {
-      value: "風船",
-    },
-    {
-      value: "キラキラ",
+      value: "Front",
     },
   ];
 
@@ -54,10 +50,43 @@ function Plugin() {
     setBackgroundValue(newValue);
   }
 
-  const handleCreateButtonClick = useCallback(function () {
-    console.log("create");
-  }, []);
+  // 前景
+  const [tabFrontValue, setTabFrontValue] = useState<string>("紙吹雪");
+  const tabFrontOptions: Array<TabsOption> = [
+    {
+      children: <ConfettiComponent />,
+      value: "紙吹雪",
+    },
+    {
+      children: <BalloonComponent />,
+      value: "風船",
+    },
+    {
+      children: <SparkleComponent />,
+      value: "キラキラ",
+    },
+  ];
+  function handleChangeFronTab(event: h.JSX.TargetedEvent<HTMLInputElement>) {
+    const newValue = event.currentTarget.value;
+    setTabFrontValue(newValue);
+  }
 
+  // 背景
+  const [tabBackgroundValue, setTabBackgroundValue] =
+    useState<string>("放射線");
+  const tabBackgroundOptions: Array<TabsOption> = [
+    {
+      children: <RadialComponent />,
+      value: "放射線",
+    },
+  ];
+
+  function handleChangeBackgroundTab(
+    event: h.JSX.TargetedEvent<HTMLInputElement>
+  ) {
+    const newValue = event.currentTarget.value;
+    setBackgroundValue(newValue);
+  }
   return (
     <Stack space="small">
       {/* <div
@@ -84,7 +113,7 @@ function Plugin() {
       <div>
         <VerticalSpace space="medium" />
 
-        <Container space="medium">
+        <Container space="extraSmall">
           <Dropdown
             onChange={handleChangeBackground}
             options={options}
@@ -92,11 +121,20 @@ function Plugin() {
           />
         </Container>
 
-        {value === "放射線" && <RadialComponent />}
-
-        {value === "紙吹雪" && <ConfettiComponent />}
-        {value === "風船" && <BalloonComponent />}
-        {value === "キラキラ" && <SparkleComponent />}
+        {value === "Background" && (
+          <Tabs
+            onChange={handleChangeBackgroundTab}
+            options={tabBackgroundOptions}
+            value={tabBackgroundValue}
+          />
+        )}
+        {value === "Front" && (
+          <Tabs
+            onChange={handleChangeFronTab}
+            options={tabFrontOptions}
+            value={tabFrontValue}
+          />
+        )}
       </div>
     </Stack>
   );

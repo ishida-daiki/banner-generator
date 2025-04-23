@@ -79,7 +79,7 @@ function Plugin() {
         />
       </div> */}
 
-      <Container space="medium">
+      <div>
         <VerticalSpace space="medium" />
 
         <Dropdown
@@ -101,7 +101,7 @@ function Plugin() {
             生成
           </Button>
         )}
-      </Container>
+      </div>
     </Stack>
   );
 }

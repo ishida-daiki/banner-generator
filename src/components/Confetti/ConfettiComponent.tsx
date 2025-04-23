@@ -12,6 +12,7 @@ import {
   IconBorderSmallSmall24,
   IconEyeSmall24,
   Toggle,
+  Container,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
@@ -90,20 +91,21 @@ export function ConfettiComponent() {
 
   return (
     <div>
-      <VerticalSpace space="medium" />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text>
-          <Bold>Count</Bold>
-        </Text>
-      </div>
-      <div>
-        <VerticalSpace space="small" />
+      <Container space="medium">
+        <VerticalSpace space="extraSmall" />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: "24px",
+          }}
+        >
+          <Text>
+            <Bold>Count</Bold>
+          </Text>
+        </div>
+        <VerticalSpace space="extraSmall" />
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <RangeSlider
             maximum={maximum}
@@ -119,109 +121,122 @@ export function ConfettiComponent() {
             style={{ width: "40px" }}
           />
         </div>
-      </div>
+      </Container>
 
       <VerticalSpace space="small" />
       <Divider />
-      <VerticalSpace space="small" />
+      <VerticalSpace space="extraSmall" />
 
       <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text>
-            <Bold>Color</Bold>
-          </Text>
-          <VerticalSpace space="extraSmall" />
-          <IconButton
-            onClick={() =>
-              setFillColors([...fillColors, { color: "E9816B", opacity: 100 }])
-            }
+        <Container space="medium">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            <IconPlus24 />
-          </IconButton>
-        </div>
-        <VerticalSpace space="extraSmall" />
-        {fillColors.map((color, index) => (
-          <div key={index}>
-            {/* <Text>
-              <Muted>Color {index + 1}</Muted>
+            <Text>
+              <Bold>Color</Bold>
             </Text>
-            <VerticalSpace space="extraSmall" /> */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <TextboxColor
-                hexColor={color.color}
-                onHexColorInput={(
-                  event: h.JSX.TargetedEvent<HTMLInputElement>
-                ) => {
-                  const newColors = [...fillColors];
-                  newColors[index] = {
-                    ...newColors[index],
-                    color: event.currentTarget.value,
-                  };
-                  setFillColors(newColors);
-                }}
-                onOpacityInput={(
-                  event: h.JSX.TargetedEvent<HTMLInputElement>
-                ) => {
-                  const newColors = [...fillColors];
-                  newColors[index] = {
-                    ...newColors[index],
-                    opacity: parseInt(event.currentTarget.value),
-                  };
-                  setFillColors(newColors);
-                }}
-                opacity={String(color.opacity)}
-              />
-              {fillColors.length > 1 && (
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "4px" }}
-                >
-                  <IconButton
-                    onClick={() => {
-                      const newColors = fillColors.filter(
-                        (_, i) => i !== index
-                      );
-                      setFillColors(newColors);
-                    }}
-                  >
-                    <IconEyeSmall24 />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      const newColors = fillColors.filter(
-                        (_, i) => i !== index
-                      );
-                      setFillColors(newColors);
-                    }}
-                  >
-                    <IconBorderSmallSmall24 />
-                  </IconButton>
-                </div>
-              )}
-            </div>
             <VerticalSpace space="extraSmall" />
+            <IconButton
+              onClick={() =>
+                setFillColors([
+                  ...fillColors,
+                  { color: "E9816B", opacity: 100 },
+                ])
+              }
+            >
+              <IconPlus24 />
+            </IconButton>
           </div>
-        ))}
+          <VerticalSpace space="extraSmall" />
+          {fillColors.map((color, index) => (
+            <div key={index}>
+              {/* <Text>
+                <Muted>Color {index + 1}</Muted>
+              </Text>
+              <VerticalSpace space="extraSmall" /> */}
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <TextboxColor
+                  hexColor={color.color}
+                  onHexColorInput={(
+                    event: h.JSX.TargetedEvent<HTMLInputElement>
+                  ) => {
+                    const newColors = [...fillColors];
+                    newColors[index] = {
+                      ...newColors[index],
+                      color: event.currentTarget.value,
+                    };
+                    setFillColors(newColors);
+                  }}
+                  onOpacityInput={(
+                    event: h.JSX.TargetedEvent<HTMLInputElement>
+                  ) => {
+                    const newColors = [...fillColors];
+                    newColors[index] = {
+                      ...newColors[index],
+                      opacity: parseInt(event.currentTarget.value),
+                    };
+                    setFillColors(newColors);
+                  }}
+                  opacity={String(color.opacity)}
+                />
+                {fillColors.length > 1 && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <IconButton
+                      onClick={() => {
+                        const newColors = fillColors.filter(
+                          (_, i) => i !== index
+                        );
+                        setFillColors(newColors);
+                      }}
+                    >
+                      <IconEyeSmall24 />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        const newColors = fillColors.filter(
+                          (_, i) => i !== index
+                        );
+                        setFillColors(newColors);
+                      }}
+                    >
+                      <IconBorderSmallSmall24 />
+                    </IconButton>
+                  </div>
+                )}
+              </div>
+              <VerticalSpace space="extraSmall" />
+            </div>
+          ))}
+        </Container>
       </div>
 
-      <VerticalSpace space="small" />
+      <VerticalSpace space="extraSmall" />
       <Divider />
       <VerticalSpace space="small" />
 
-      <Toggle onChange={handleChange} value={isRandom}>
-        <Text>ランダムに設定する</Text>
-      </Toggle>
+      <Container space="medium">
+        <Toggle onChange={handleChange} value={isRandom}>
+          <Text>ランダムに設定する</Text>
+        </Toggle>
 
-      <VerticalSpace space="small" />
+        <VerticalSpace space="small" />
 
-      <Button fullWidth onClick={handleCreateButtonClick}>
-        生成
-      </Button>
+        <Button fullWidth onClick={handleCreateButtonClick}>
+          生成
+        </Button>
+      </Container>
       <VerticalSpace space="medium" />
     </div>
   );

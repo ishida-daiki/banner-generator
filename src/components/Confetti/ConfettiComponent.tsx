@@ -8,9 +8,12 @@ import {
   RangeSlider,
   TextboxColor,
   Divider,
+  Bold,
   Container,
   IconButton,
   IconPlus24,
+  IconBorderSmallSmall24,
+  IconEyeSmall24,
   IconTrash24,
 } from "@create-figma-plugin/ui";
 import { emit } from "@create-figma-plugin/utilities";
@@ -74,40 +77,69 @@ export function ConfettiComponent() {
 
   return (
     <div>
-      <VerticalSpace space="large" />
-
-      <div>
+      <VerticalSpace space="medium" />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Text>
-          <Muted>Count</Muted>
+          <Bold>Count</Bold>
         </Text>
+      </div>
+      <div>
         <VerticalSpace space="small" />
-        <RangeSlider
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleCountInput}
-          value={count}
-        />
-        <VerticalSpace space="small" />
-        <TextboxNumeric
-          maximum={maximum}
-          minimum={minimum}
-          onInput={handleCountInput}
-          value={count}
-        />
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <RangeSlider
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleCountInput}
+            value={count}
+          />
+          <TextboxNumeric
+            maximum={maximum}
+            minimum={minimum}
+            onInput={handleCountInput}
+            value={count}
+            style={{ width: "40px" }}
+          />
+        </div>
       </div>
 
-      <VerticalSpace space="large" />
+      <VerticalSpace space="small" />
       <Divider />
-      <VerticalSpace space="large" />
+      <VerticalSpace space="small" />
 
       <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text>
+            <Bold>Color</Bold>
+          </Text>
+          <VerticalSpace space="extraSmall" />
+          <IconButton
+            onClick={() =>
+              setFillColors([...fillColors, { color: "E9816B", opacity: 100 }])
+            }
+          >
+            <IconPlus24 />
+          </IconButton>
+        </div>
+        <VerticalSpace space="extraSmall" />
         {fillColors.map((color, index) => (
           <div key={index}>
-            <Text>
+            {/* <Text>
               <Muted>Color {index + 1}</Muted>
             </Text>
-            <VerticalSpace space="extraSmall" />
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <VerticalSpace space="extraSmall" /> */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <TextboxColor
                 hexColor={color.color}
                 onHexColorInput={(
@@ -133,75 +165,36 @@ export function ConfettiComponent() {
                 opacity={String(color.opacity)}
               />
               {fillColors.length > 1 && (
-                <IconButton
-                  onClick={() => {
-                    const newColors = fillColors.filter((_, i) => i !== index);
-                    setFillColors(newColors);
-                  }}
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "4px" }}
                 >
-                  <IconTrash24 />
-                </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      const newColors = fillColors.filter(
+                        (_, i) => i !== index
+                      );
+                      setFillColors(newColors);
+                    }}
+                  >
+                    <IconEyeSmall24 />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      const newColors = fillColors.filter(
+                        (_, i) => i !== index
+                      );
+                      setFillColors(newColors);
+                    }}
+                  >
+                    <IconBorderSmallSmall24 />
+                  </IconButton>
+                </div>
               )}
             </div>
-            <VerticalSpace space="medium" />
+            <VerticalSpace space="extraSmall" />
           </div>
         ))}
-        <IconButton
-          onClick={() =>
-            setFillColors([...fillColors, { color: "E9816B", opacity: 100 }])
-          }
-        >
-          <IconPlus24 />
-        </IconButton>
       </div>
-
-      {/* <div style={{ marginBottom: "8px" }}>
-        {fillColors.map((color, index) => (
-          <div
-            key={index}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "8px",
-            }}
-          >
-            <input
-              type="text"
-              value={color}
-              onChange={(e) =>
-                handleColorInput((e.target as HTMLInputElement).value, index)
-              }
-              style={{
-                width: "80px",
-                padding: "4px 8px",
-                border: "1px solid #ccc",
-                borderRadius: "2px",
-                marginRight: "8px",
-              }}
-            />
-            <div
-              style={{
-                width: "24px",
-                height: "24px",
-                backgroundColor: `#${color}`,
-                border: "1px solid #ccc",
-                borderRadius: "2px",
-                marginRight: "8px",
-              }}
-            />
-            {fillColors.length > 1 && (
-              <IconButton onClick={() => handleRemoveColor(index)}>
-                <IconTrash24 />
-              </IconButton>
-            )}
-          </div>
-        ))}
-      </div> */}
-
-      {/* <Button fullWidth onClick={handleAddColor}>
-        <IconPlus24 />
-        <text>色を追加</text>
-      </Button> */}
 
       <VerticalSpace space="medium" />
       <VerticalSpace space="medium" />

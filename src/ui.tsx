@@ -72,12 +72,15 @@ function Plugin() {
   }
 
   // 背景
-  const [tabBackgroundValue, setTabBackgroundValue] =
-    useState<string>("放射線");
+  const [tabBackgroundValue, setTabBackgroundValue] = useState<string>("放射線");
   const tabBackgroundOptions: Array<TabsOption> = [
     {
       children: <RadialComponent />,
       value: "放射線",
+    },
+    {
+      children: <RadialComponent />,
+      value: "グラデーション",
     },
   ];
 
@@ -85,7 +88,7 @@ function Plugin() {
     event: h.JSX.TargetedEvent<HTMLInputElement>
   ) {
     const newValue = event.currentTarget.value;
-    setBackgroundValue(newValue);
+    setTabBackgroundValue(newValue);
   }
   return (
     <Stack space="small">

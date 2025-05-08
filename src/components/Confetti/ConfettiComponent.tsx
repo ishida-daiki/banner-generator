@@ -32,7 +32,6 @@ export function ConfettiComponent() {
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [fillColor, setFillColor] = useState<string>("E9816B");
 
-  // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
   ]);

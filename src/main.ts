@@ -393,78 +393,63 @@ export default function () {
     const centerX = figma.viewport.center.x;
     const centerY = figma.viewport.center.y;
 
-    const confetti = [];
     for (let i = 0; i < count; i++) {
-      let x, y;
 
-      if (isRandom) {
-        // ランダム分布の場合
-        const angle = (i / count) * Math.PI * 2;
-        const randomAngle = ((Math.random() - 0.5) * Math.PI) / 4;
-        const baseDistance = Math.random() * spreadRange;
-        const distance = baseDistance * (0.7 + Math.random() * 0.3);
-        x = centerX + Math.cos(angle + randomAngle) * distance;
-        y = centerY + Math.sin(angle + randomAngle) * distance;
-      } else {
-        // 横並びで等間隔に配置
-        const spacing = 100; // 要素間の間隔
-        const totalWidth = (count - 1) * spacing; // 全体の幅
-        x = centerX - totalWidth / 2 + i * spacing; // 中心から左右に均等に配置
-        y = centerY; // 高さは固定
+      // 2行2列で余白0で配置
+      const ellipseWidth = 88;
+      const ellipseHeight = 131.87;
+      const gridSize = 2;
+      const ellipses = [];
+      for (let i = 0; i < 4; i++) {
+        const ellipse = figma.createEllipse();
+        ellipse.resize(ellipseWidth, ellipseHeight);
+        // 2x2グリッド配置
+        const row = Math.floor(i / gridSize);
+        const col = i % gridSize;
+        ellipse.x = centerX - ellipseWidth + col * ellipseWidth;
+        ellipse.y = centerY - ellipseHeight / 2 + row * ellipseHeight;
+        const randomColor =
+          fillColors[Math.floor(Math.random() * fillColors.length)];
+        const rgb = hexToRgb(randomColor);
+        ellipse.fills = [
+          {
+            type: "SOLID",
+            color: rgb,
+            opacity: fillOpacity / 100,
+          },
+        ];
+        ellipse.strokes = [];
+        if (isRandom) {
+          ellipse.rotation = Math.random() * 360;
+        }
+        ellipses.push(ellipse);
       }
+      // Unionで1つにまとめる
+      const unionNode = figma.union(ellipses, figma.currentPage);
+      unionNode.name = "SparkleUnion";
 
-      // 紙吹雪の形状を作成
-      const vector = figma.createVector();
-      vector.resize(24, 33);
-      vector.x = x - 12;
-      vector.y = y - 16.5;
-
-      // SVGのパスデータをFigmaのベクトルパスに変換
-      vector.vectorPaths = [
-        {
-          windingRule: "NONZERO",
-          data:
-            "M 40.6045 8.89746 " +
-            "C 33.5713 27.3301 18.6846 41.666 0 48 " +
-            "C 18.6846 54.334 33.5713 68.6699 40.6045 87.1025 " +
-            "L 44 96 " +
-            "L 47.3955 87.1025 " +
-            "C 54.4287 68.6699 69.3154 54.334 88 48 " +
-            "C 69.3154 41.666 54.4287 27.3301 47.3955 8.89746 " +
-            "L 44 0 " +
-            "L 40.6045 8.89746 " +
-            "Z",
-        },
-      ];
-
-      // ランダムに色を選択
-      const randomColor =
-        fillColors[Math.floor(Math.random() * fillColors.length)];
-      const rgb = hexToRgb(randomColor);
-      vector.fills = [
+      // unionNodeから中央の1つのellipseをsubtract
+      const centerEllipse = figma.createEllipse();
+      centerEllipse.resize(88, 131.87);
+      centerEllipse.x = centerX - centerEllipse.width / 2;
+      centerEllipse.y = centerY - centerEllipse.height / 2;
+      centerEllipse.fills = [
         {
           type: "SOLID",
-          color: rgb,
-          opacity: fillOpacity / 100,
+          color: { r: 1, g: 0, b: 0 }, // 色は仮
         },
       ];
+      const subtractedNode = figma.subtract([centerEllipse], figma.currentPage);
+      subtractedNode.appendChild(unionNode);
+      subtractedNode.name = "SparkleSubtracted";
 
-      // ストロークを削除
-      vector.strokes = [];
+      // 上下中央揃え
+      centerEllipse.y = centerY - centerEllipse.height / 2;
+      unionNode.y = centerY - unionNode.height / 2;
 
-      // ランダムな回転を設定
-      if (isRandom) {
-        vector.rotation = Math.random() * 360;
-      }
-
-      confetti.push(vector);
+      figma.currentPage.selection = [subtractedNode];
+      figma.viewport.scrollAndZoomIntoView([subtractedNode]);
     }
-
-    // パーティクルをグループ化
-    const group = figma.group(confetti, figma.currentPage);
-    group.name = "Confetti";
-    figma.currentPage.selection = [group];
-    figma.viewport.scrollAndZoomIntoView([group]);
   });
 
   on<CloseHandler>("CLOSE", function () {

@@ -436,7 +436,7 @@ export default function () {
       centerEllipse.fills = [
         {
           type: "SOLID",
-          color: { r: 1, g: 0, b: 0 }, // 色は仮
+          color: { r: 0.851, g: 0.851, b: 0.851 }
         },
       ];
       const subtractedNode = figma.subtract([centerEllipse], figma.currentPage);

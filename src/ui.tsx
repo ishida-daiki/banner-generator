@@ -12,7 +12,7 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 
 import { RadialComponent } from "./components/background/RadialComponent";
-import { GradientComponent } from "./components/background/Gradient/GradientComponent";
+import { GradientComponent } from "./components/background/GradientComponent";
 import { ConfettiComponent } from "./components/front/ConfettiComponent";
 import { BalloonComponent } from "./components/front/BalloonComponent";
 import { SparkleComponent } from "./components/front/SparkleComponent";

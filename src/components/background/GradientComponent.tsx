@@ -10,7 +10,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState, useEffect } from "preact/hooks";
 
-import { CreateCircleHandler, PreviewCircleHandler } from "./type";
+// import { CreateCircleHandler, PreviewCircleHandler } from "./type";
 
 export function GradientComponent() {
   const [count, setCount] = useState<number | null>(10);
@@ -51,17 +51,17 @@ export function GradientComponent() {
       if (radius !== null && strokeWidth !== null) {
 
         // Figmaプレビューも更新
-        emit<PreviewCircleHandler>("PREVIEW_CIRCLE", {
-          radius,
-          strokeWidth: Number(strokeWidth),
-          strokeCap,
-          strokeJoin,
-          dashPattern: [Number(dashLength), Number(dashGap)],
-          fillColor,
-          fillOpacity: Number(fillOpacity),
-          strokeColor,
-          strokeOpacity: Number(strokeOpacity),
-        });
+        // emit<PreviewCircleHandler>("PREVIEW_CIRCLE", {
+        //   radius,
+        //   strokeWidth: Number(strokeWidth),
+        //   strokeCap,
+        //   strokeJoin,
+        //   dashPattern: [Number(dashLength), Number(dashGap)],
+        //   fillColor,
+        //   fillOpacity: Number(fillOpacity),
+        //   strokeColor,
+        //   strokeOpacity: Number(strokeOpacity),
+        // });
       }
     },
     [
@@ -105,17 +105,17 @@ export function GradientComponent() {
   const handleCreateGradientButtonClick = useCallback(
     function () {
       if (count !== null && radius !== null && strokeWidth !== null) {
-        emit<CreateCircleHandler>("CREATE_CIRCLE", {
-          radius,
-          strokeWidth: Number(strokeWidth),
-          strokeCap,
-          strokeJoin,
-          dashPattern: [Number(dashLength), Number(dashGap)],
-          fillColor,
-          fillOpacity: Number(fillOpacity),
-          strokeColor,
-          strokeOpacity: Number(strokeOpacity),
-        });
+        // emit<CreateCircleHandler>("CREATE_CIRCLE", {
+        //   radius,
+        //   strokeWidth: Number(strokeWidth),
+        //   strokeCap,
+        //   strokeJoin,
+        //   dashPattern: [Number(dashLength), Number(dashGap)],
+        //   fillColor,
+        //   fillOpacity: Number(fillOpacity),
+        //   strokeColor,
+        //   strokeOpacity: Number(strokeOpacity),
+        // });
       }
     },
     [

@@ -13,7 +13,7 @@ import { useState } from "preact/hooks";
 
 import { RadialComponent } from "./components/background/Radial/RadialComponent";
 import { GradientComponent } from "./components/background/Gradient/GradientComponent";
-import { ConfettiComponent } from "./components/front/Confetti/ConfettiComponent";
+import { ConfettiComponent } from "./components/front/ConfettiComponent";
 import { BalloonComponent } from "./components/front/Balloon/BalloonComponent";
 import { SparkleComponent } from "./components/front/Sparkle/SparkleComponent";
 
@@ -122,9 +122,8 @@ function Plugin() {
             {value === "Background" && tabBackgroundValue === "放射線" && (
               <RadialPreview />
             )}
-            {value === "Background" && tabBackgroundValue === "グラデーション" && (
-              <GradientPreview />
-            )}
+            {value === "Background" &&
+              tabBackgroundValue === "グラデーション" && <GradientPreview />}
           </div>
           {/* 前景プレビュー */}
           <div

@@ -25,18 +25,6 @@ export interface CreateCircleHandler extends EventHandler {
   }) => void;
 }
 
-export interface CreateConfettiHandlerType extends EventHandler {
-  name: "CREATE_CONFETTI";
-  handler: (options: {
-    count: number;
-    size: number;
-    fillColors: string[];
-    fillOpacity: number;
-    spreadRange: number;
-    isRandom: boolean;
-  }) => void;
-}
-
 export interface CreateBalloonHandler extends EventHandler {
   name: "CREATE_BALLOON";
   handler: (options: {

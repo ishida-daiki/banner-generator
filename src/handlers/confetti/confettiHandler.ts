@@ -1,7 +1,9 @@
-import { CreateConfettiHandlerType } from "../../types";
+import { CreateConfettiHandlerType } from "./ConfettiHandlerType";
 import { hexToRgb } from "../hexToRgb";
 
-export const confettiHandler: CreateConfettiHandlerType["handler"] = (options) => {
+export const confettiHandler: CreateConfettiHandlerType["handler"] = (
+  options
+) => {
   const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
     options;
   const centerX = figma.viewport.center.x;

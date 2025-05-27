@@ -4,11 +4,13 @@ import {
   CreateCircleHandler,
   PreviewCircleHandler,
   CloseHandler,
-  CreateConfettiHandlerType,
   CreateBalloonHandler,
   CreateSparkleHandler,
 } from "./types";
+
+// 紙吹雪の関数 & 型
 import { confettiHandler } from "./handlers/confetti/confettiHandler";
+import { CreateConfettiHandlerType } from "./handlers/confetti/ConfettiHandlerType";
 
 function hexToRgb(hex: string) {
   // #を削除し、3桁の場合は6桁に変換

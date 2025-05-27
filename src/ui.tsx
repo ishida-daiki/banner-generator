@@ -25,10 +25,10 @@ import {
   CreateCircleHandler,
   PreviewCircleHandler,
 } from "./types";
-import { RadialComponent } from "./components/Radial/RadialComponent";
-import { ConfettiComponent } from "./components/Confetti/ConfettiComponent";
-import { BalloonComponent } from "./components/Balloon/BalloonComponent";
-import { SparkleComponent } from "./components/Sparkle/SparkleComponent";
+import { RadialComponent } from "./components/background/Radial/RadialComponent";
+import { ConfettiComponent } from "./components/front/Confetti/ConfettiComponent";
+import { BalloonComponent } from "./components/front/Balloon/BalloonComponent";
+import { SparkleComponent } from "./components/front/Sparkle/SparkleComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("Background");

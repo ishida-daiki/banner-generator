@@ -14,7 +14,7 @@ import { useState } from "preact/hooks";
 import { RadialComponent } from "./components/background/Radial/RadialComponent";
 import { GradientComponent } from "./components/background/Gradient/GradientComponent";
 import { ConfettiComponent } from "./components/front/ConfettiComponent";
-import { BalloonComponent } from "./components/front/Balloon/BalloonComponent";
+import { BalloonComponent } from "./components/front/BalloonComponent";
 import { SparkleComponent } from "./components/front/Sparkle/SparkleComponent";
 
 function Plugin() {

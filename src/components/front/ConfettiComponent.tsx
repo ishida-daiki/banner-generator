@@ -15,7 +15,6 @@ import {
   Container,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
-
 import { useConfetti } from "../../hooks/useConfetti";
 
 export function ConfettiComponent() {

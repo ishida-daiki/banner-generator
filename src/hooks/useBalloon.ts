@@ -1,21 +1,20 @@
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateConfettiHandlerType } from "../handlers/confetti/confettiHandlerType";
+import { CreateBalloonHandlerType } from "../handlers/balloon/balloonHandlerType";
 
 interface ColorWithOpacity {
   color: string;
   opacity: number;
 }
 
-export function useConfetti() {
-  const [count, setCount] = useState<string>("10");
+export function useBalloon() {
+  const [count, setCount] = useState<string>("3");
   const [size, setSize] = useState<string>("24");
   const [isRandom, setIsRandom] = useState<boolean>(true);
-
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [fillColor, setFillColor] = useState<string>("E9816B");
-
+  // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
   ]);
@@ -51,7 +50,7 @@ export function useConfetti() {
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
-      emit<CreateConfettiHandlerType>("CREATE_CONFETTI", {
+      emit<CreateBalloonHandlerType>("CREATE_BALLOON", {
         count: countNum,
         size: parseInt(size),
         fillColors: fillColors.map((color) => color.color),
@@ -64,17 +63,20 @@ export function useConfetti() {
   );
 
   const minimum = 0;
-  const maximum = 200;
-
+  const maximum = 20;
   return {
     count,
+    setCount,
     size,
     setSize,
     isRandom,
+    setIsRandom,
     fillOpacity,
+    setFillOpacity,
     fillColor,
-    setFillColors,
+    setFillColor,
     fillColors,
+    setFillColors,
     handleFillColorInput,
     handleFillOpacityInput,
     handleCountInput,

@@ -21,7 +21,7 @@ export function useGradient() {
   const maximum = 500;
 
   const [fillColor, setFillColor] = useState<string>("FF99FF");
-  const [fillOpacity, setFillOpacity] = useState<string>("50");
+  const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [strokeColor, setStrokeColor] = useState<string>("FF00FF");
   const [strokeOpacity, setStrokeOpacity] = useState<string>("100");
 

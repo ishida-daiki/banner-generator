@@ -6,8 +6,8 @@ import { hexToRgb } from "../../hexToRgb";
 var initialCenterX: number | null = null;
 var initialCenterY: number | null = null;
 
-// 作成した円を保持する変数
-var currentCircle: EllipseNode | null = null;
+// 作成した矩形を保持する変数
+var currentRectangle: RectangleNode | null = null;
 var currentGroup: GroupNode | null = null;
 
 
@@ -15,7 +15,7 @@ var currentGroup: GroupNode | null = null;
 export const gradientHandler: CreateGradientHandlerType["handler"] = (
   options
 ) => {
-  const { radius, strokeWidth, strokeCap, strokeJoin, dashPattern, fillColor, fillOpacity, strokeColor, strokeOpacity } = options;
+  const { fillColor, fillOpacity } = options;
   const centerX = figma.viewport.center.x;
   const centerY = figma.viewport.center.y;
 
@@ -65,13 +65,21 @@ export const gradientHandler: CreateGradientHandlerType["handler"] = (
   initialCenterX = centerX;
   initialCenterY = centerY;
 
-  // 円を作成
-  const circle = figma.createEllipse();
-  currentCircle = circle; // 作成した円を保持
+  const rgb = hexToRgb(fillColor);
 
-  figma.currentPage.appendChild(circle);
-  figma.currentPage.selection = [circle];
-  figma.viewport.scrollAndZoomIntoView([circle]);
+  // 円を作成
+  const rectangle = figma.createRectangle();
+  rectangle.resize(1200, 630);
+  rectangle.x = centerX - rectangle.width / 2;
+  rectangle.y = centerY - rectangle.height / 2;
+  console.log(fillOpacity)
+  rectangle.fills = [
+    { type: "SOLID", color: rgb, opacity: fillOpacity / 100 },
+  ];
+
+  figma.currentPage.appendChild(rectangle);
+  figma.currentPage.selection = [rectangle];
+  figma.viewport.scrollAndZoomIntoView([rectangle]);
 
   // マスクグループを作成
   // const maskGroup = createMaskGroup(circle, centerX, centerY);

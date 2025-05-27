@@ -1,5 +1,5 @@
 import { CreateBalloonHandlerType } from "./balloonHandlerType";
-import { hexToRgb } from "../hexToRgb";
+import { hexToRgb } from "../../../handlers/hexToRgb";
 
 export const balloonHandler: CreateBalloonHandlerType["handler"] = (
   options

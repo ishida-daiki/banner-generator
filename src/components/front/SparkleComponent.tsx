@@ -15,7 +15,7 @@ import {
   Container,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
-import { useSparkle } from "../../hooks/useSparkle";
+import { useSparkle } from "../../hooks/front/useSparkle";
 
 export function SparkleComponent() {
   const {
@@ -36,7 +36,7 @@ export function SparkleComponent() {
     handleChange,
     handleCreateButtonClick,
     minimum,
-    maximum
+    maximum,
   } = useSparkle();
 
   return (

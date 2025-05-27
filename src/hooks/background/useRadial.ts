@@ -4,7 +4,7 @@ import { useCallback, useState, useEffect } from "preact/hooks";
 import {
   PreviewRadialHandlerType,
   CreateRadialHandlerType,
-} from "../handlers/radial/radialHandlerType";
+} from "../../handlers/background/radial/radialHandlerType";
 
 export function useRadial() {
   const [count, setCount] = useState<number | null>(10);
@@ -188,6 +188,6 @@ export function useRadial() {
     handleStrokeWidthInput,
     handleCreateButtonClick,
     minimum,
-    maximum
+    maximum,
   };
 }

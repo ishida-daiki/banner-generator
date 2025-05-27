@@ -10,7 +10,7 @@ import {
   Bold,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
-import { useRadial } from "../../hooks/useRadial";
+import { useRadial } from "../../hooks/background/useRadial";
 
 export function RadialComponent() {
   const {
@@ -44,7 +44,7 @@ export function RadialComponent() {
     handleStrokeWidthInput,
     handleCreateButtonClick,
     minimum,
-    maximum
+    maximum,
   } = useRadial();
 
   return (

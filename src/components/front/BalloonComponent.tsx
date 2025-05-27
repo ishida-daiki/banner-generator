@@ -15,7 +15,7 @@ import {
   Container,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
-import { useBalloon } from "../../hooks/useBalloon";
+import { useBalloon } from "../../hooks/front/useBalloon";
 
 export function BalloonComponent() {
   const {

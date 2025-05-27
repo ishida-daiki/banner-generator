@@ -1,17 +1,15 @@
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateSparkleHandlerType } from "../handlers/sparkle/sparkleHandlerType";
-import { ColorWithOpacity } from "../types";
+import { CreateBalloonHandlerType } from "../../handlers/balloon/balloonHandlerType";
+import { ColorWithOpacity } from "../../types";
 
-export function useSparkle() {
+export function useBalloon() {
   const [count, setCount] = useState<string>("3");
   const [size, setSize] = useState<string>("24");
   const [isRandom, setIsRandom] = useState<boolean>(true);
-
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [fillColor, setFillColor] = useState<string>("E9816B");
-
   // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
@@ -48,7 +46,7 @@ export function useSparkle() {
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
-      emit<CreateSparkleHandlerType>("CREATE_SPARKLE", {
+      emit<CreateBalloonHandlerType>("CREATE_BALLOON", {
         count: countNum,
         size: parseInt(size),
         fillColors: fillColors.map((color) => color.color),
@@ -62,9 +60,9 @@ export function useSparkle() {
 
   const minimum = 0;
   const maximum = 20;
-
   return {
     count,
+    setCount,
     size,
     setSize,
     isRandom,
@@ -81,6 +79,6 @@ export function useSparkle() {
     handleChange,
     handleCreateButtonClick,
     minimum,
-    maximum
+    maximum,
   };
 }

@@ -5,23 +5,21 @@ import {
 } from "./types";
 
 // 放射線の作成とプレビュー & 型
-import { radialHandler, previewRadialHandler } from "./handlers/radial/radialHandler";
-import { CreateRadialHandlerType, PreviewRadialHandlerType } from "./handlers/radial/radialHandlerType";
+import { radialHandler, previewRadialHandler } from "./handlers/background/radial/radialHandler";
+import { CreateRadialHandlerType, PreviewRadialHandlerType } from "./handlers/background/radial/radialHandlerType";
 
 // 紙吹雪の関数 & 型
-import { confettiHandler } from "./handlers/confetti/confettiHandler";
-import { CreateConfettiHandlerType } from "./handlers/confetti/confettiHandlerType";
+import { confettiHandler } from "./handlers/front/confetti/confettiHandler";
+import { CreateConfettiHandlerType } from "./handlers/front/confetti/confettiHandlerType";
 
 // バルーンの関数 & 型
-import { balloonHandler } from "./handlers/balloon/balloonHandler";
-import { CreateBalloonHandlerType } from "./handlers/balloon/balloonHandlerType";
+import { balloonHandler } from "./handlers/front/balloon/balloonHandler";
+import { CreateBalloonHandlerType } from "./handlers/front/balloon/balloonHandlerType";
 
 // スパークルの関数 & 型
-import { sparkleHandler } from "./handlers/sparkle/sparkleHandler";
-import { CreateSparkleHandlerType } from "./handlers/sparkle/sparkleHandlerType";
+import { sparkleHandler } from "./handlers/front/sparkle/sparkleHandler";
+import { CreateSparkleHandlerType } from "./handlers/front/sparkle/sparkleHandlerType";
 
-// 色の16進数をRGBに変換する関数
-import { hexToRgb } from "./handlers/hexToRgb";
 
 export default function () {
   // 放射線の作成 & プレビュー
@@ -37,14 +35,12 @@ export default function () {
   // スパークルの作成
   on<CreateSparkleHandlerType>("CREATE_SPARKLE", sparkleHandler);
 
+  // Figma プラグインを閉じる
   on<CloseHandler>("CLOSE", function () {
-    // プラグインを閉じる前にプレビューを非表示にする
-    // if (previewGroup) {
-    //   previewGroup.visible = false;
-    // }
     figma.closePlugin();
   });
 
+  // プラグインのUI設定
   showUI({
     height: 520,
     width: 240,

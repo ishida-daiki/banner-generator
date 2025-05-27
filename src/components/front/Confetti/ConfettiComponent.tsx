@@ -17,7 +17,7 @@ import {
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateConfettiHandler } from "../../types";
+import { CreateConfettiHandler } from "../../../types";
 
 interface ColorWithOpacity {
   color: string;

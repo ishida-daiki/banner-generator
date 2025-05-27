@@ -1,31 +1,18 @@
 import {
-  Button,
-  Columns,
   Container,
-  Muted,
   render,
-  Text,
-  TextboxNumeric,
   VerticalSpace,
-  RangeSlider,
-  TextboxColor,
   Stack,
-  Divider,
   Dropdown,
   DropdownOption,
   Tabs,
   TabsOption,
 } from "@create-figma-plugin/ui";
-import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
-import { useCallback, useState, useEffect } from "preact/hooks";
+import { useState } from "preact/hooks";
 
-import {
-  CloseHandler,
-  CreateCircleHandler,
-  PreviewCircleHandler,
-} from "./types";
 import { RadialComponent } from "./components/background/Radial/RadialComponent";
+import { GradientComponent } from "./components/background/Gradient/GradientComponent";
 import { ConfettiComponent } from "./components/front/Confetti/ConfettiComponent";
 import { BalloonComponent } from "./components/front/Balloon/BalloonComponent";
 import { SparkleComponent } from "./components/front/Sparkle/SparkleComponent";
@@ -80,7 +67,7 @@ function Plugin() {
       value: "放射線",
     },
     {
-      children: <RadialComponent />,
+      children: <GradientComponent />,
       value: "グラデーション",
     },
   ];
@@ -135,8 +122,9 @@ function Plugin() {
             {value === "Background" && tabBackgroundValue === "放射線" && (
               <RadialPreview />
             )}
-            {value === "Background" &&
-              tabBackgroundValue === "グラデーション" && <GradientPreview />}
+            {value === "Background" && tabBackgroundValue === "グラデーション" && (
+              <GradientPreview />
+            )}
           </div>
           {/* 前景プレビュー */}
           <div

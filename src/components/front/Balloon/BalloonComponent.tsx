@@ -17,7 +17,7 @@ import {
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateBalloonHandler } from "../../types";
+import { CreateBalloonHandler } from "../../../types";
 
 interface ColorWithOpacity {
   color: string;

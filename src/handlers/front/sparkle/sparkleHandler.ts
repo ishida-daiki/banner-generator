@@ -1,5 +1,5 @@
 import { CreateSparkleHandlerType } from "./sparkleHandlerType";
-import { hexToRgb } from "../hexToRgb";
+import { hexToRgb } from "../../hexToRgb";
 
 export const sparkleHandler: CreateSparkleHandlerType["handler"] = (
   options

@@ -1,7 +1,7 @@
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
-import { CreateBalloonHandlerType } from "../../handlers/balloon/balloonHandlerType";
+import { CreateBalloonHandlerType } from "../../handlers/front/balloon/balloonHandlerType";
 import { ColorWithOpacity } from "../../types";
 
 export function useBalloon() {

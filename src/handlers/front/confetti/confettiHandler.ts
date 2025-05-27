@@ -1,5 +1,5 @@
 import { CreateConfettiHandlerType } from "./confettiHandlerType";
-import { hexToRgb } from "../../../handlers/hexToRgb";
+import { hexToRgb } from "../../hexToRgb";
 
 export const confettiHandler: CreateConfettiHandlerType["handler"] = (
   options

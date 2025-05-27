@@ -1,7 +1,5 @@
 import {
   Button,
-  Columns,
-  Muted,
   Text,
   TextboxNumeric,
   VerticalSpace,
@@ -14,8 +12,10 @@ import {
 import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState, useEffect } from "preact/hooks";
-
-import { CreateCircleHandler, PreviewCircleHandler } from "./type";
+import {
+  PreviewRadialHandlerType,
+  CreateRadialHandlerType,
+} from "../../handlers/radial/radialHandlerType";
 
 export function RadialComponent() {
   const [count, setCount] = useState<number | null>(10);
@@ -87,57 +87,8 @@ export function RadialComponent() {
   const updatePreview = useCallback(
     function () {
       if (radius !== null && strokeWidth !== null) {
-        // プレビューキャンバスに描画
-        // const canvas = document.getElementById(
-        //   "previewCanvas"
-        // ) as HTMLCanvasElement;
-        // const ctx = canvas.getContext("2d");
-        // if (ctx) {
-        //   // キャンバスをクリア
-        //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        //   // 円の中心座標
-        //   const centerX = canvas.width / 2;
-        //   const centerY = canvas.height / 2;
-
-        //   // スケールを調整（プレビューサイズに合わせる）
-        //   const scale =
-        //     Math.min(canvas.width, canvas.height) / (radius * 2 + strokeWidth);
-        //   const scaledRadius = radius * scale;
-        //   const scaledStrokeWidth = strokeWidth * scale;
-
-        //   // 円を描画
-        //   ctx.beginPath();
-        //   ctx.arc(centerX, centerY, scaledRadius, 0, Math.PI * 2);
-
-        //   // 背景色を設定
-        //   ctx.fillStyle = `#${fillColor}${Math.round(Number(fillOpacity) * 2.55)
-        //     .toString(16)
-        //     .padStart(2, "0")}`;
-        //   ctx.fill();
-
-        //   // 線の設定
-        //   ctx.strokeStyle = `#${strokeColor}${Math.round(
-        //     Number(strokeOpacity) * 2.55
-        //   )
-        //     .toString(16)
-        //     .padStart(2, "0")}`;
-        //   ctx.lineWidth = scaledStrokeWidth;
-
-        //   // 破線の設定
-        //   if (Number(dashLength) > 0 || Number(dashGap) > 0) {
-        //     ctx.setLineDash([
-        //       Number(dashLength) * scale,
-        //       Number(dashGap) * scale,
-        //     ]);
-        //   }
-
-        //   // 線を描画
-        //   ctx.stroke();
-        // }
-
         // Figmaプレビューも更新
-        emit<PreviewCircleHandler>("PREVIEW_CIRCLE", {
+        emit<PreviewRadialHandlerType>("PREVIEW_RADIAL", {
           radius,
           strokeWidth: Number(strokeWidth),
           strokeCap,
@@ -191,7 +142,7 @@ export function RadialComponent() {
   const handleCreateButtonClick = useCallback(
     function () {
       if (count !== null && radius !== null && strokeWidth !== null) {
-        emit<CreateCircleHandler>("CREATE_CIRCLE", {
+        emit<CreateRadialHandlerType>("CREATE_RADIAL", {
           radius,
           strokeWidth: Number(strokeWidth),
           strokeCap,

@@ -10,26 +10,6 @@ export interface ColorWithOpacity {
   opacity: number;
 }
 
-export interface CreateCircleHandler extends EventHandler {
-  name: "CREATE_CIRCLE";
-  handler: (options: {
-    radius: number;
-    strokeWidth: number;
-    strokeCap:
-      | "NONE"
-      | "ROUND"
-      | "SQUARE"
-      | "ARROW_LINES"
-      | "ARROW_EQUILATERAL";
-    strokeJoin: "ROUND" | "MITER" | "BEVEL";
-    dashPattern: number[];
-    fillColor: string;
-    fillOpacity: number;
-    strokeColor: string;
-    strokeOpacity: number;
-  }) => void;
-}
-
 export interface CloseHandler extends EventHandler {
   name: "CLOSE";
   handler: () => void;
@@ -40,22 +20,3 @@ export interface AddToFigmaHandler extends EventHandler {
   handler: () => void;
 }
 
-export interface PreviewCircleHandler extends EventHandler {
-  name: "PREVIEW_CIRCLE";
-  handler: (options: {
-    radius: number;
-    strokeWidth: number;
-    strokeCap:
-      | "NONE"
-      | "ROUND"
-      | "SQUARE"
-      | "ARROW_LINES"
-      | "ARROW_EQUILATERAL";
-    strokeJoin: "ROUND" | "MITER" | "BEVEL";
-    dashPattern: number[];
-    fillColor: string;
-    fillOpacity: number;
-    strokeColor: string;
-    strokeOpacity: number;
-  }) => void;
-}

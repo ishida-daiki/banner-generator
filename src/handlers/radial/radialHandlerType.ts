@@ -1,12 +1,7 @@
 import { EventHandler } from "@create-figma-plugin/utilities";
 
-export interface CreateRectanglesHandler extends EventHandler {
-  name: "CREATE_RECTANGLES";
-  handler: (count: number) => void;
-}
-
-export interface CreateCircleHandler extends EventHandler {
-  name: "CREATE_CIRCLE";
+export interface PreviewRadialHandlerType extends EventHandler {
+  name: "PREVIEW_RADIAL";
   handler: (options: {
     radius: number;
     strokeWidth: number;
@@ -25,27 +20,8 @@ export interface CreateCircleHandler extends EventHandler {
   }) => void;
 }
 
-export interface CreateRadialHandler extends EventHandler {
+export interface CreateRadialHandlerType extends EventHandler {
   name: "CREATE_RADIAL";
-  handler: (options: {
-    count: number; // 放射状の数
-    length: number; // 各線の長さ
-    width: number; // 線の太さ
-  }) => void;
-}
-
-export interface CloseHandler extends EventHandler {
-  name: "CLOSE";
-  handler: () => void;
-}
-
-export interface AddToFigmaHandler extends EventHandler {
-  name: "ADD_TO_FIGMA";
-  handler: () => void;
-}
-
-export interface PreviewCircleHandler extends EventHandler {
-  name: "PREVIEW_CIRCLE";
   handler: (options: {
     radius: number;
     strokeWidth: number;

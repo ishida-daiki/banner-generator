@@ -25,7 +25,7 @@ export interface CreateCircleHandler extends EventHandler {
   }) => void;
 }
 
-export interface CreateConfettiHandler extends EventHandler {
+export interface CreateConfettiHandlerType extends EventHandler {
   name: "CREATE_CONFETTI";
   handler: (options: {
     count: number;

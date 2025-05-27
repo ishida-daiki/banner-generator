@@ -2,11 +2,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
 import { CreateBalloonHandlerType } from "../handlers/balloon/balloonHandlerType";
-
-interface ColorWithOpacity {
-  color: string;
-  opacity: number;
-}
+import { ColorWithOpacity } from "../types";
 
 export function useBalloon() {
   const [count, setCount] = useState<string>("3");

@@ -2,11 +2,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
 import { CreateSparkleHandlerType } from "../handlers/sparkle/sparkleHandlerType";
-
-interface ColorWithOpacity {
-  color: string;
-  opacity: number;
-}
+import { ColorWithOpacity } from "../types";
 
 export function useSparkle() {
   const [count, setCount] = useState<string>("3");

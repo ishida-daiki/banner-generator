@@ -5,6 +5,11 @@ export interface CreateRectanglesHandler extends EventHandler {
   handler: (count: number) => void;
 }
 
+export interface ColorWithOpacity {
+  color: string;
+  opacity: number;
+}
+
 export interface CreateCircleHandler extends EventHandler {
   name: "CREATE_CIRCLE";
   handler: (options: {

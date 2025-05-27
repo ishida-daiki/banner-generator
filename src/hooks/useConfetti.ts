@@ -2,11 +2,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState } from "preact/hooks";
 import { CreateConfettiHandlerType } from "../handlers/confetti/confettiHandlerType";
-
-interface ColorWithOpacity {
-  color: string;
-  opacity: number;
-}
+import { ColorWithOpacity } from "../types";
 
 export function useConfetti() {
   const [count, setCount] = useState<string>("10");

@@ -4,7 +4,6 @@ import {
   CreateCircleHandler,
   PreviewCircleHandler,
   CloseHandler,
-  CreateSparkleHandler,
 } from "./types";
 
 // 紙吹雪の関数 & 型
@@ -14,6 +13,10 @@ import { CreateConfettiHandlerType } from "./handlers/confetti/confettiHandlerTy
 // バルーンの関数 & 型
 import { balloonHandler } from "./handlers/balloon/balloonHandler";
 import { CreateBalloonHandlerType } from "./handlers/balloon/balloonHandlerType";
+
+// スパークルの関数 & 型
+import { sparkleHandler } from "./handlers/sparkle/sparkleHandler";
+import { CreateSparkleHandlerType } from "./handlers/sparkle/sparkleHandlerType";
 
 // 色の16進数をRGBに変換する関数
 import { hexToRgb } from "./handlers/hexToRgb";
@@ -211,69 +214,8 @@ export default function () {
   // バルーンの作成
   on<CreateBalloonHandlerType>("CREATE_BALLOON", balloonHandler);
 
-  on<CreateSparkleHandler>("CREATE_SPARKLE", function (options) {
-    const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
-      options;
-    const centerX = figma.viewport.center.x;
-    const centerY = figma.viewport.center.y;
-
-    for (let i = 0; i < count; i++) {
-      // 2行2列で余白0で配置
-      const ellipseWidth = 88;
-      const ellipseHeight = 131.87;
-      const gridSize = 2;
-      const ellipses = [];
-      for (let i = 0; i < 4; i++) {
-        const ellipse = figma.createEllipse();
-        ellipse.resize(ellipseWidth, ellipseHeight);
-        // 2x2グリッド配置
-        const row = Math.floor(i / gridSize);
-        const col = i % gridSize;
-        ellipse.x = centerX - ellipseWidth + col * ellipseWidth;
-        ellipse.y = centerY - ellipseHeight / 2 + row * ellipseHeight;
-        const randomColor =
-          fillColors[Math.floor(Math.random() * fillColors.length)];
-        const rgb = hexToRgb(randomColor);
-        ellipse.fills = [
-          {
-            type: "SOLID",
-            color: rgb,
-            opacity: fillOpacity / 100,
-          },
-        ];
-        ellipse.strokes = [];
-        if (isRandom) {
-          ellipse.rotation = Math.random() * 360;
-        }
-        ellipses.push(ellipse);
-      }
-      // Unionで1つにまとめる
-      const unionNode = figma.union(ellipses, figma.currentPage);
-      unionNode.name = "SparkleUnion";
-
-      // unionNodeから中央の1つのellipseをsubtract
-      const centerEllipse = figma.createEllipse();
-      centerEllipse.resize(88, 131.87);
-      centerEllipse.x = centerX - centerEllipse.width / 2;
-      centerEllipse.y = centerY - centerEllipse.height / 2;
-      centerEllipse.fills = [
-        {
-          type: "SOLID",
-          color: { r: 0.851, g: 0.851, b: 0.851 },
-        },
-      ];
-      const subtractedNode = figma.subtract([centerEllipse], figma.currentPage);
-      subtractedNode.appendChild(unionNode);
-      subtractedNode.name = "SparkleSubtracted";
-
-      // 上下中央揃え
-      centerEllipse.y = centerY - centerEllipse.height / 2;
-      unionNode.y = centerY - unionNode.height / 2;
-
-      figma.currentPage.selection = [subtractedNode];
-      figma.viewport.scrollAndZoomIntoView([subtractedNode]);
-    }
-  });
+  // スパークルの作成
+  on<CreateSparkleHandlerType>("CREATE_SPARKLE", sparkleHandler);
 
   on<CloseHandler>("CLOSE", function () {
     // プラグインを閉じる前にプレビューを非表示にする

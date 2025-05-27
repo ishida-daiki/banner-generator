@@ -15,7 +15,7 @@ import { RadialComponent } from "./components/background/Radial/RadialComponent"
 import { GradientComponent } from "./components/background/Gradient/GradientComponent";
 import { ConfettiComponent } from "./components/front/ConfettiComponent";
 import { BalloonComponent } from "./components/front/BalloonComponent";
-import { SparkleComponent } from "./components/front/Sparkle/SparkleComponent";
+import { SparkleComponent } from "./components/front/SparkleComponent";
 
 function Plugin() {
   const [value, setBackgroundValue] = useState<string>("Background");

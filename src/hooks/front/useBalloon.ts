@@ -9,15 +9,11 @@ export function useBalloon() {
   const [size, setSize] = useState<string>("24");
   const [isRandom, setIsRandom] = useState<boolean>(true);
   const [fillOpacity, setFillOpacity] = useState<string>("100");
-  const [fillColor, setFillColor] = useState<string>("E9816B");
   // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
   ]);
 
-  function handleFillColorInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
-    setFillColor(event.currentTarget.value);
-  }
 
   function handleFillOpacityInput(
     event: h.JSX.TargetedEvent<HTMLInputElement>
@@ -46,11 +42,12 @@ export function useBalloon() {
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
+      console.log("fillColors:", fillColors);
       emit<CreateBalloonHandlerType>("CREATE_BALLOON", {
         count: countNum,
         size: parseInt(size),
-        fillColors: fillColors.map((color) => color.color),
-        fillOpacity: parseInt(fillOpacity),
+        fillColors: fillColors,
+        // fillOpacity: fillColors.map((color) => color.opacity),
         spreadRange: calculateSpreadRange(countNum),
         isRandom: isRandom,
       });
@@ -62,18 +59,12 @@ export function useBalloon() {
   const maximum = 20;
   return {
     count,
-    setCount,
-    size,
-    setSize,
     isRandom,
     setIsRandom,
     fillOpacity,
     setFillOpacity,
-    fillColor,
-    setFillColor,
     fillColors,
     setFillColors,
-    handleFillColorInput,
     handleFillOpacityInput,
     handleCountInput,
     handleChange,

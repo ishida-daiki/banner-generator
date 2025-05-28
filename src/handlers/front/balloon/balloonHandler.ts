@@ -4,7 +4,7 @@ import { hexToRgb } from "../../hexToRgb";
 export const balloonHandler: CreateBalloonHandlerType["handler"] = (
   options
 ) => {
-  const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
+  const { count, size, fillColors, spreadRange, isRandom } =
     options;
   const centerX = figma.viewport.center.x;
   const centerY = figma.viewport.center.y;
@@ -29,12 +29,11 @@ export const balloonHandler: CreateBalloonHandlerType["handler"] = (
       y = centerY; // 高さは固定
     }
 
-    // 紙吹雪の形状を作成
+    // 🎈風船の形状を作成
     const vector = figma.createVector();
     vector.resize(24, 33);
     vector.x = x - 12;
     vector.y = y - 16.5;
-
     // SVGのパスデータをFigmaのベクトルパスに変換
     vector.vectorPaths = [
       {
@@ -61,9 +60,11 @@ export const balloonHandler: CreateBalloonHandlerType["handler"] = (
     ];
 
     // ランダムに色を選択
-    const randomColor =
-      fillColors[Math.floor(Math.random() * fillColors.length)];
-    const rgb = hexToRgb(randomColor);
+    const randomColorStyle = fillColors[Math.floor(Math.random() * fillColors.length)];
+    const rgb = hexToRgb(randomColorStyle.color);
+    const fillOpacity = randomColorStyle.opacity;
+
+    // 色と不透明度を設定
     vector.fills = [
       {
         type: "SOLID",

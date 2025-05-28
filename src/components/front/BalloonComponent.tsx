@@ -20,18 +20,12 @@ import { useBalloon } from "../../hooks/front/useBalloon";
 export function BalloonComponent() {
   const {
     count,
-    setCount,
-    size,
-    setSize,
     isRandom,
     setIsRandom,
     fillOpacity,
     setFillOpacity,
-    fillColor,
-    setFillColor,
     fillColors,
     setFillColors,
-    handleFillColorInput,
     handleFillOpacityInput,
     handleCountInput,
     handleChange,
@@ -127,6 +121,7 @@ export function BalloonComponent() {
                         color: event.currentTarget.value,
                       };
                       setFillColors(newColors);
+                      console.log("newColors:", newColors);
                     }}
                     onOpacityInput={(
                       event: h.JSX.TargetedEvent<HTMLInputElement>
@@ -137,6 +132,7 @@ export function BalloonComponent() {
                         opacity: parseInt(event.currentTarget.value),
                       };
                       setFillColors(newColors);
+                      console.log("newColors:", newColors);
                     }}
                     opacity={String(color.opacity)}
                   />

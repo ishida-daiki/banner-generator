@@ -49,7 +49,7 @@ export default function () {
 
   // プラグインのUI設定
   showUI({
-    height: 520,
+    height: 650,
     width: 240,
   });
 }

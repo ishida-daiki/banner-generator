@@ -5,11 +5,12 @@ import {
   TextboxColor,
   Container,
   Bold,
+  IconButton,
+  IconPlus24,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
 import { useGradient } from "../../hooks/background/useGradient";
-// import { CreateCircleHandler, PreviewCircleHandler } from "./type";
-
+import { ColorOpacityInput } from "../ColorOpacityInput";
 
 export function GradientComponent() {
   const {
@@ -30,6 +31,8 @@ export function GradientComponent() {
     setFillColor,
     fillOpacity,
     setFillOpacity,
+    fillColors,
+    setFillColors,
     strokeColor,
     setStrokeColor,
     strokeOpacity,
@@ -45,50 +48,43 @@ export function GradientComponent() {
     <div>
       <Container space="medium">
         <VerticalSpace space="extraSmall" />
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "24px",
-            }}
-          >
-            <Text>
-              <Bold>color1</Bold>
-            </Text>
-          </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text>
+            <Bold>Color</Bold>
+          </Text>
           <VerticalSpace space="extraSmall" />
-          <TextboxColor
-            hexColor={fillColor}
-            onHexColorInput={handleFillColorInput}
-            onOpacityInput={handleFillOpacityInput}
-            opacity={fillOpacity}
-          />
+          <IconButton
+            onClick={() =>
+              setFillColors([...fillColors, { color: "E9816B", opacity: 100 }])
+            }
+          >
+            <IconPlus24 />
+          </IconButton>
         </div>
-
-        <VerticalSpace space="small" />
-
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "24px",
-            }}
-          >
-            <Text>
-              <Bold>base color</Bold>
-            </Text>
-          </div>
-          <VerticalSpace space="extraSmall" />
-          <TextboxColor
-            hexColor={fillColor}
-            onHexColorInput={handleFillColorInput}
-            onOpacityInput={handleFillOpacityInput}
-            opacity={fillOpacity}
-          />
+        <VerticalSpace space="extraSmall" />
+        <div
+          style={{
+            height: "236px",
+            overflowY: "auto",
+            paddingRight: "12px",
+            marginRight: "-12px", // スクロールバーのスペースを確保
+          }}
+        >
+          {fillColors.map((color, index) => (
+            <ColorOpacityInput
+              key={index}
+              index={index}
+              color={color}
+              fillColors={fillColors}
+              setFillColors={setFillColors}
+            />
+          ))}
         </div>
       </Container>
 

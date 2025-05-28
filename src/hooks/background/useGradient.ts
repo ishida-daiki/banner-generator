@@ -2,6 +2,7 @@ import { emit } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useCallback, useState, useEffect } from "preact/hooks";
 import { CreateGradientHandlerType } from "../../handlers/background/gradient/gradientHandlerType";
+import { ColorWithOpacity } from "../../types";
 
 export function useGradient() {
   const [count, setCount] = useState<number | null>(10);
@@ -24,6 +25,9 @@ export function useGradient() {
   const [fillOpacity, setFillOpacity] = useState<string>("100");
   const [strokeColor, setStrokeColor] = useState<string>("FF00FF");
   const [strokeOpacity, setStrokeOpacity] = useState<string>("100");
+  const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
+    { color: "E9816B", opacity: 100 },
+  ]);
 
   function handleFillColorInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     setFillColor(event.currentTarget.value);
@@ -137,6 +141,8 @@ export function useGradient() {
     setDashGap,
     fillColor,
     setFillColor,
+    fillColors,
+    setFillColors,
     fillOpacity,
     setFillOpacity,
     strokeColor,

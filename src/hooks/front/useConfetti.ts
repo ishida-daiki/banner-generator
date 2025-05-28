@@ -7,25 +7,12 @@ import { ColorWithOpacity } from "../../types";
 export function useConfetti() {
   const [count, setCount] = useState<string>("10");
   const [size, setSize] = useState<string>("24");
-  const [isRandom, setIsRandom] = useState<boolean>(true);
-
-  const [fillOpacity, setFillOpacity] = useState<string>("100");
-  const [fillColor, setFillColor] = useState<string>("E9816B");
-
+  const [isRandom, setIsRandom] = useState<boolean>(true)
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
   ]);
 
-  function handleFillColorInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
-    setFillColor(event.currentTarget.value);
-  }
-
-  function handleFillOpacityInput(
-    event: h.JSX.TargetedEvent<HTMLInputElement>
-  ) {
-    setFillOpacity(event.currentTarget.value);
-  }
-
+  // カウントを入力する
   function handleCountInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
     setCount(newValue);
@@ -39,26 +26,28 @@ export function useConfetti() {
     return baseRange * scaleFactor;
   };
 
+  // ランダムに設定するかどうかを切り替える
   function handleChange(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.checked;
     setIsRandom(newValue);
   }
 
+  // 生成ボタンをクリックする
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
       emit<CreateConfettiHandlerType>("CREATE_CONFETTI", {
         count: countNum,
         size: parseInt(size),
-        fillColors: fillColors.map((color) => color.color),
-        fillOpacity: parseInt(fillOpacity),
+        fillColors: fillColors,
         spreadRange: calculateSpreadRange(countNum),
         isRandom: isRandom,
       });
     },
-    [count, size, fillColors, fillOpacity, isRandom]
+    [count, size, fillColors, isRandom]
   );
 
+  // 最小値と最大値を設定
   const minimum = 0;
   const maximum = 200;
 
@@ -67,12 +56,8 @@ export function useConfetti() {
     size,
     setSize,
     isRandom,
-    fillOpacity,
-    fillColor,
     setFillColors,
     fillColors,
-    handleFillColorInput,
-    handleFillOpacityInput,
     handleCountInput,
     handleChange,
     handleCreateButtonClick,

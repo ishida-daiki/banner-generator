@@ -1,21 +1,18 @@
 import {
   Button,
   Text,
-  TextboxNumeric,
   VerticalSpace,
-  RangeSlider,
-  TextboxColor,
   Divider,
   Bold,
   IconButton,
   IconPlus24,
-  IconBorderSmallSmall24,
-  IconEyeSmall24,
   Toggle,
   Container,
 } from "@create-figma-plugin/ui";
 import { h } from "preact";
 import { useConfetti } from "../../hooks/front/useConfetti";
+import { ColorOpacityInput } from "../ColorOpacityInput";
+import { Counter } from "../Counter";
 
 export function ConfettiComponent() {
   const {
@@ -23,12 +20,8 @@ export function ConfettiComponent() {
     size,
     setSize,
     isRandom,
-    fillOpacity,
-    fillColor,
     setFillColors,
     fillColors,
-    handleFillColorInput,
-    handleFillOpacityInput,
     handleCountInput,
     handleChange,
     handleCreateButtonClick,
@@ -40,34 +33,13 @@ export function ConfettiComponent() {
     <div>
       <Container space="medium">
         <VerticalSpace space="extraSmall" />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "24px",
-            marginBottom: "4px",
-          }}
-        >
-          <Text>
-            <Bold>Count</Bold>
-          </Text>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <RangeSlider
-            maximum={maximum}
-            minimum={minimum}
-            onInput={handleCountInput}
-            value={count}
-          />
-          <TextboxNumeric
-            maximum={maximum}
-            minimum={minimum}
-            onInput={handleCountInput}
-            value={count}
-            style={{ width: "40px" }}
-          />
-        </div>
+        <Counter
+          title="Count"
+          maximum={maximum}
+          minimum={minimum}
+          handleCountInput={handleCountInput}
+          count={count}
+        />
       </Container>
 
       <VerticalSpace space="small" />
@@ -108,67 +80,13 @@ export function ConfettiComponent() {
             }}
           >
             {fillColors.map((color, index) => (
-              <div key={index}>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  <TextboxColor
-                    hexColor={color.color}
-                    onHexColorInput={(
-                      event: h.JSX.TargetedEvent<HTMLInputElement>
-                    ) => {
-                      const newColors = [...fillColors];
-                      newColors[index] = {
-                        ...newColors[index],
-                        color: event.currentTarget.value,
-                      };
-                      setFillColors(newColors);
-                    }}
-                    onOpacityInput={(
-                      event: h.JSX.TargetedEvent<HTMLInputElement>
-                    ) => {
-                      const newColors = [...fillColors];
-                      newColors[index] = {
-                        ...newColors[index],
-                        opacity: parseInt(event.currentTarget.value),
-                      };
-                      setFillColors(newColors);
-                    }}
-                    opacity={String(color.opacity)}
-                  />
-                  {fillColors.length > 1 && (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                      }}
-                    >
-                      <IconButton
-                        onClick={() => {
-                          const newColors = fillColors.filter(
-                            (_, i) => i !== index
-                          );
-                          setFillColors(newColors);
-                        }}
-                      >
-                        <IconEyeSmall24 />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => {
-                          const newColors = fillColors.filter(
-                            (_, i) => i !== index
-                          );
-                          setFillColors(newColors);
-                        }}
-                      >
-                        <IconBorderSmallSmall24 />
-                      </IconButton>
-                    </div>
-                  )}
-                </div>
-                <VerticalSpace space="extraSmall" />
-              </div>
+              <ColorOpacityInput
+                key={index}
+                index={index}
+                color={color}
+                fillColors={fillColors}
+                setFillColors={setFillColors}
+              />
             ))}
           </div>
         </Container>

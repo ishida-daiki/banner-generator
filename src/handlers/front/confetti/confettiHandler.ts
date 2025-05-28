@@ -4,7 +4,7 @@ import { hexToRgb } from "../../hexToRgb";
 export const confettiHandler: CreateConfettiHandlerType["handler"] = (
   options
 ) => {
-  const { count, size, fillColors, fillOpacity, spreadRange, isRandom } =
+  const { count, size, fillColors, spreadRange, isRandom } =
     options;
   const centerX = figma.viewport.center.x;
   const centerY = figma.viewport.center.y;
@@ -54,9 +54,11 @@ export const confettiHandler: CreateConfettiHandlerType["handler"] = (
     ];
 
     // ランダムに色を選択
-    const randomColor =
-      fillColors[Math.floor(Math.random() * fillColors.length)];
-    const rgb = hexToRgb(randomColor);
+    const randomColorStyle = fillColors[Math.floor(Math.random() * fillColors.length)];
+    const rgb = hexToRgb(randomColorStyle.color);
+    const fillOpacity = randomColorStyle.opacity;
+
+    // 色と不透明度を設定
     vector.fills = [
       {
         type: "SOLID",

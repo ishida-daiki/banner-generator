@@ -7,7 +7,6 @@ export interface CreateBalloonHandlerType extends EventHandler {
     count: number;
     size: number;
     fillColors: ColorWithOpacity[];
-    // fillOpacity: string[];
     spreadRange: number;
     isRandom: boolean;
   }) => void;

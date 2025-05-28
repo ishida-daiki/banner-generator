@@ -8,19 +8,11 @@ export function useBalloon() {
   const [count, setCount] = useState<string>("3");
   const [size, setSize] = useState<string>("24");
   const [isRandom, setIsRandom] = useState<boolean>(true);
-  const [fillOpacity, setFillOpacity] = useState<string>("100");
-  // const [fillColors, setFillColors] = useState<string[]>(["E9816B"]);
   const [fillColors, setFillColors] = useState<ColorWithOpacity[]>([
     { color: "E9816B", opacity: 100 },
   ]);
 
-
-  function handleFillOpacityInput(
-    event: h.JSX.TargetedEvent<HTMLInputElement>
-  ) {
-    setFillOpacity(event.currentTarget.value);
-  }
-
+  // カウントを入力する
   function handleCountInput(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.value;
     setCount(newValue);
@@ -34,38 +26,36 @@ export function useBalloon() {
     return baseRange * scaleFactor;
   };
 
+  // ランダムに設定するかどうかを切り替える
   function handleChange(event: h.JSX.TargetedEvent<HTMLInputElement>) {
     const newValue = event.currentTarget.checked;
     setIsRandom(newValue);
   }
 
+  // 生成ボタンをクリックする
   const handleCreateButtonClick = useCallback(
     function () {
       const countNum = parseInt(count);
-      console.log("fillColors:", fillColors);
       emit<CreateBalloonHandlerType>("CREATE_BALLOON", {
         count: countNum,
         size: parseInt(size),
         fillColors: fillColors,
-        // fillOpacity: fillColors.map((color) => color.opacity),
         spreadRange: calculateSpreadRange(countNum),
         isRandom: isRandom,
       });
     },
-    [count, size, fillColors, fillOpacity, isRandom]
+    [count, size, fillColors, isRandom]
   );
 
+  // 最小値と最大値を設定
   const minimum = 0;
   const maximum = 20;
+
   return {
     count,
     isRandom,
-    setIsRandom,
-    fillOpacity,
-    setFillOpacity,
     fillColors,
     setFillColors,
-    handleFillOpacityInput,
     handleCountInput,
     handleChange,
     handleCreateButtonClick,

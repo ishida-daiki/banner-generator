@@ -21,12 +21,8 @@ export function BalloonComponent() {
   const {
     count,
     isRandom,
-    setIsRandom,
-    fillOpacity,
-    setFillOpacity,
     fillColors,
     setFillColors,
-    handleFillOpacityInput,
     handleCountInput,
     handleChange,
     handleCreateButtonClick,
@@ -121,7 +117,6 @@ export function BalloonComponent() {
                         color: event.currentTarget.value,
                       };
                       setFillColors(newColors);
-                      console.log("newColors:", newColors);
                     }}
                     onOpacityInput={(
                       event: h.JSX.TargetedEvent<HTMLInputElement>
@@ -132,7 +127,6 @@ export function BalloonComponent() {
                         opacity: parseInt(event.currentTarget.value),
                       };
                       setFillColors(newColors);
-                      console.log("newColors:", newColors);
                     }}
                     opacity={String(color.opacity)}
                   />
